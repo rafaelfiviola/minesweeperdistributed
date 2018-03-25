@@ -6,5 +6,6 @@ public class Mines extends JFrame
     public static void main(String[] args)
     {
         new MineFrame();
+        System.out.println("cesar bundão");
     }
 }
