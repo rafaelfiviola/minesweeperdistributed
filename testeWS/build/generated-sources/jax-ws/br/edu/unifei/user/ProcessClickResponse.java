@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for processClickResponse complex type.
+ * <p>Classe Java de processClickResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
  * &lt;complexType name="processClickResponse">
@@ -36,7 +36,7 @@ public class ProcessClickResponse {
     protected int _return;
 
     /**
-     * Gets the value of the return property.
+     * Obtém o valor da propriedade return.
      * 
      */
     public int getReturn() {
@@ -44,7 +44,7 @@ public class ProcessClickResponse {
     }
 
     /**
-     * Sets the value of the return property.
+     * Define o valor da propriedade return.
      * 
      */
     public void setReturn(int value) {

@@ -19,7 +19,7 @@ public class HelloWorldPublisher {
         Thread runServ = new Thread(new RunServer());
         runServ.start();
         for (int i = 0; i < 100000; i++);
-        Thread client = new Thread(new Control(true));
-        client.start();
+       // Thread client = new Thread(new Control(true));
+      //  client.start();
     }
 }
