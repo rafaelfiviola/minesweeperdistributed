@@ -133,7 +133,6 @@ public class ListarServidores extends javax.swing.JFrame {
     private void procurarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarBtnActionPerformed
         serverInfoList = new ArrayList<>();
         //serverInfoList = fetchAllServers();
-        
 
         //PARA TESTES, REMOVER NA VERSÃO FINAL
         ServerInfo si = new ServerInfo();
@@ -142,16 +141,15 @@ public class ListarServidores extends javax.swing.JFrame {
         si.setDifficulty("Hard");
         si.setNumberOfPlayers(5);
         serverInfoList.add(si);
-        
+
         ServerInfo si2 = new ServerInfo();
         si2.setName("aa22a");
         si2.setIpAdress("192.168.0.5");
         si2.setDifficulty("Medium");
         si2.setNumberOfPlayers(4);
         serverInfoList.add(si2);
-        
-        //Por agora, to criando essa lista no braço, mas o fetch deveria ser aqui
 
+        //Por agora, to criando essa lista no braço, mas o fetch deveria ser aqui
         boolean condition = true;
         if (condition) {
             servCbx.removeAllItems();
@@ -163,7 +161,6 @@ public class ListarServidores extends javax.swing.JFrame {
 
     private void servCbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servCbxActionPerformed
         selectedServer = (ServerInfo) servCbx.getSelectedItem();
-        
         if (selectedServer != null) {
             updateLabels();
         }
