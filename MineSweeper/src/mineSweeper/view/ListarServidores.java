@@ -1,22 +1,29 @@
 package mineSweeper.view;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author laser
  */
 public class ListarServidores extends javax.swing.JFrame {
 
+    private List<ServerInfo> serverInfoList;
+    private ServerInfo selectedServer;
+
     /**
      * Creates new form ListarServidores
      */
     public ListarServidores() {
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -28,7 +35,7 @@ public class ListarServidores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        servCbx = new javax.swing.JComboBox<>();
+        servCbx = new javax.swing.JComboBox<ServerInfo>();
         procurarBtn = new javax.swing.JButton();
         nomeLbl = new javax.swing.JLabel();
         nomeServLbl = new javax.swing.JLabel();
@@ -40,7 +47,18 @@ public class ListarServidores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        servCbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                servCbxActionPerformed(evt);
+            }
+        });
+
         procurarBtn.setText("Procurar");
+        procurarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                procurarBtnActionPerformed(evt);
+            }
+        });
 
         nomeLbl.setText("Nome:");
 
@@ -107,11 +125,61 @@ public class ListarServidores extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Faz o fetch da lista de servidores e atualiza a JComboBox
+     *
+     * @param evt
+     */
+    private void procurarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarBtnActionPerformed
+        serverInfoList = new ArrayList<>();
+        //serverInfoList = fetchAllServers();
+        
+
+        //PARA TESTES, REMOVER NA VERSÃO FINAL
+        ServerInfo si = new ServerInfo();
+        si.setName("aaa");
+        si.setIpAdress("192.168.0.1");
+        si.setDifficulty("Hard");
+        si.setNumberOfPlayers(5);
+        serverInfoList.add(si);
+        
+        ServerInfo si2 = new ServerInfo();
+        si2.setName("aa22a");
+        si2.setIpAdress("192.168.0.5");
+        si2.setDifficulty("Medium");
+        si2.setNumberOfPlayers(4);
+        serverInfoList.add(si2);
+        
+        //Por agora, to criando essa lista no braço, mas o fetch deveria ser aqui
+
+        boolean condition = true;
+        if (condition) {
+            servCbx.removeAllItems();
+            System.out.println("Logging inside condition, removed all items, adding new ones");
+            serverInfoList.forEach(servCbx::addItem);
+            servCbx.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_procurarBtnActionPerformed
+
+    private void servCbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servCbxActionPerformed
+        selectedServer = (ServerInfo) servCbx.getSelectedItem();
+        
+        if (selectedServer != null) {
+            updateLabels();
+        }
+    }//GEN-LAST:event_servCbxActionPerformed
+
+    private void updateLabels() {
+        nomeServLbl.setText(selectedServer.getName());
+        dificuldadeServLbl.setText(selectedServer.getDifficulty());
+        numeroServLbl.setText(selectedServer.getNumberOfPlayers().toString());
+    }
 
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
+    public static void main(String args[]) {
+        ListarServidores window = new ListarServidores();
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 //        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -141,7 +209,7 @@ public class ListarServidores extends javax.swing.JFrame {
 //                new ListarServidores().setVisible(true);
 //            }
 //        });
-//    }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel dificuldadeLbl;
@@ -152,6 +220,6 @@ public class ListarServidores extends javax.swing.JFrame {
     private javax.swing.JLabel numeroSrvLbl;
     private javax.swing.JButton procurarBtn;
     private javax.swing.JButton selecionarBtn;
-    private javax.swing.JComboBox<String> servCbx;
+    private javax.swing.JComboBox<ServerInfo> servCbx;
     // End of variables declaration//GEN-END:variables
 }
