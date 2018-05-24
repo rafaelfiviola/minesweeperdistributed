@@ -5,6 +5,7 @@
  */
 package br.edu.unifei.user;
 
+import static java.lang.Thread.sleep;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.Naming;
@@ -76,16 +77,27 @@ public class Control implements Runnable {
 
     @Override
     public void run() {
-        try {
-            Server localServ = (Server) Naming.lookup(getService(localIP));
-            System.out.println("Resp:" + localServ.requestBoard(null));
-        } catch (NotBoundException ex) {
-            Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+        while (true) {
+            try {
+
+                Server localServ = (Server) Naming.lookup(getService(localIP));
+                localServ.SendClick(port, port, host);
+                System.out.println("Resp:" + localServ.requestBoard(null));
+
+            } catch (NotBoundException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
 
 }

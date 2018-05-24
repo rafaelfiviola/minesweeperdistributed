@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
  */
 public class ServerImpl extends java.rmi.server.UnicastRemoteObject implements Server {
 
+    private int count =0;
     public ServerImpl() throws RemoteException {
         super();
     }
@@ -20,12 +21,13 @@ public class ServerImpl extends java.rmi.server.UnicastRemoteObject implements S
     @Override
     public int SendClick(int x, int y, boolean button) throws RemoteException {
         //TODO passar o click para ser processado pela aplicação
+        count++;
         return 1;
     }
 
     @Override
-    public int requestBoard(Object Board) throws RemoteException {
-        return 1;
+    public int requestBoard(Object Board) throws RemoteException {      
+        return count;
     }
     
     public void teste(){}
