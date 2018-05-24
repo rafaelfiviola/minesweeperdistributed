@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de processClick complex type.
+ * <p>Java class for processClick complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="processClick">
@@ -37,7 +37,7 @@ public class ProcessClick {
     protected int arg1;
 
     /**
-     * Obtém o valor da propriedade arg0.
+     * Gets the value of the arg0 property.
      * 
      */
     public int getArg0() {
@@ -45,7 +45,7 @@ public class ProcessClick {
     }
 
     /**
-     * Define o valor da propriedade arg0.
+     * Sets the value of the arg0 property.
      * 
      */
     public void setArg0(int value) {
@@ -53,7 +53,7 @@ public class ProcessClick {
     }
 
     /**
-     * Obtém o valor da propriedade arg1.
+     * Gets the value of the arg1 property.
      * 
      */
     public int getArg1() {
@@ -61,7 +61,7 @@ public class ProcessClick {
     }
 
     /**
-     * Define o valor da propriedade arg1.
+     * Sets the value of the arg1 property.
      * 
      */
     public void setArg1(int value) {

@@ -5,21 +5,21 @@
  */
 package br.edu.unifei.testeWS;
 
-import br.edu.unifei.testeServerInt.RunServer;
+
 import br.edu.unifei.user.Control;
-import javax.xml.ws.Endpoint;
+import mineSweeper.rmi.ServerLaunch;
 
 /**
  *
  * @author Cesar
  */
-
 public class HelloWorldPublisher {
+
     public static void main(String[] args) {
-        Thread runServ = new Thread(new RunServer());
+        Thread runServ = new Thread(new ServerLaunch(7879, "192.168.100.126"));
         runServ.start();
         for (int i = 0; i < 100000; i++);
-       // Thread client = new Thread(new Control(true));
-      //  client.start();
+         Thread client = new Thread(new Control(true,"192.168.100.126","",7879));
+          client.start();
     }
 }

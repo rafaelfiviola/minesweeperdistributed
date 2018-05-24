@@ -340,6 +340,7 @@ public class Board extends JPanel {
         }
     }
 
+    
 //Click event when user clicked a field
     public int[] mousePressed(int x, int y, boolean button) {
         int cCol = x / CELL_SIZE;
