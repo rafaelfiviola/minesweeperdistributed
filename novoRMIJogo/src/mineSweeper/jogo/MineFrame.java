@@ -106,6 +106,12 @@ public class MineFrame {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
             } 
         });
+        if(host){
+            connButt.setVisible(true);
+        }else{
+            connButt.setVisible(false);
+        }
+            
         gamePanel.add(connButt, BorderLayout.NORTH);
 
         Board teste = null;
