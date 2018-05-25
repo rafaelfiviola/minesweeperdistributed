@@ -88,11 +88,10 @@ public class MineFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (host) {
-            Thread server = new Thread(new LaunchServer(7879, "192.168.100.110", teste));
-            server.start();
-        }
-        
+
+        Thread server = new Thread(new LaunchServer(7879, "192.168.100.133", teste)); //ip local
+        server.start();
+
         gamePanel.add(board, BorderLayout.CENTER);
 
         playingGame = true;//Set to true so the user may make actions

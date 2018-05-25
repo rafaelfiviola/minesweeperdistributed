@@ -113,34 +113,46 @@ public class BoardJpanel extends JPanel {
 
     // create a new game
     public void newGame() {
+
+        Random random;
+        int current_col;
+
+        int i = 0;
+        int position = 0;
+        int cell = 0;
+
+        random = new Random();
+        inGame = true;
+        mines_left = mines;
+
+        //Assign the amount of cells there are to all_cells
+        all_cells = rows * cols;
+
+        //Assign 'field' the size of all_cells
+        field = new int[all_cells];
+
+        //Assign cover cell image to all cells on the board
+        for (i = 0; i < all_cells; i++) {
+            field[i] = COVER_FOR_CELL;
+        }
+
+        //Set the text for the status bar
+        statusbar.setText(mineStr + Integer.toString(mines_left));
+
+        try {
+            remoteBoard = (Board) Naming.lookup(getService("192.168.100.110", 7879)); //ip remoto
+        } catch (NotBoundException ex) {
+            Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Reset i to 0
         if (host) {
-            Random random;
-            int current_col;
-
-            int i = 0;
-            int position = 0;
-            int cell = 0;
-
-            random = new Random();
-            inGame = true;
-            mines_left = mines;
-
-            //Assign the amount of cells there are to all_cells
-            all_cells = rows * cols;
-
-            //Assign 'field' the size of all_cells
-            field = new int[all_cells];
-
-            //Assign cover cell image to all cells on the board
-            for (i = 0; i < all_cells; i++) {
-                field[i] = COVER_FOR_CELL;
-            }
-
-            //Set the text for the status bar
-            statusbar.setText(mineStr + Integer.toString(mines_left));
-
-            //Reset i to 0
             i = 0;
+
             while (i < mines) {
                 //Select a random cell on the board and place a mine in it
                 position = (int) (all_cells * random.nextDouble());
@@ -220,12 +232,7 @@ public class BoardJpanel extends JPanel {
             }
         } else {
             try {
-                remoteBoard = (Board) Naming.lookup(getService("192.168.100.110", 7879));
                 field = remoteBoard.getField();
-            } catch (NotBoundException ex) {
-                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (RemoteException ex) {
                 Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
             }
