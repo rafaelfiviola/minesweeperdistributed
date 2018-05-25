@@ -53,6 +53,11 @@ public class BoardJpanel extends JPanel {
 
     private Board remoteBoard;
 
+    public void setRemoteBoard(Board remoteBoard) {
+        this.remoteBoard = remoteBoard;
+    }
+    
+
     //Constructor
     public BoardJpanel(JLabel statusbar, int noOfMines, int noOfRows, int noOfCols, boolean host) {
         //Set the values of the member variables as determined by the MineFrame class
@@ -139,15 +144,6 @@ public class BoardJpanel extends JPanel {
         //Set the text for the status bar
         statusbar.setText(mineStr + Integer.toString(mines_left));
 
-        try {
-            remoteBoard = (Board) Naming.lookup(getService("192.168.100.110", 7879)); //ip remoto
-        } catch (NotBoundException ex) {
-            Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         //Reset i to 0
         if (host) {
@@ -232,8 +228,13 @@ public class BoardJpanel extends JPanel {
             }
         } else {
             try {
+               remoteBoard = (Board) Naming.lookup(getService("192.168.100.133", 7879)); //ip remoto           
                 field = remoteBoard.getField();
             } catch (RemoteException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
                 Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -11,8 +11,8 @@ package mineSweeper.jogo;
  */
 public class Teste {
     public static void main(String[] args) {
-//        new MineFrame(true);;
-//        for (int i = 0; i < 100000; i++);
-        new MineFrame(false);
+        new MineFrame(true);;
+        for (int i = 0; i < 100000; i++);
+//        new MineFrame(false);
     }
 }

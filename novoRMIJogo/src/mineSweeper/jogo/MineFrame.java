@@ -7,12 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -58,6 +62,10 @@ public class MineFrame {
     private static JMenuItem pauseItem;
 
     private JRadioButtonMenuItem beginnerItem, intermediateItem, expertItem;
+    
+    private static String getService(String serverIp, int port) {
+        return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
+    }
 
     //Constructor of the MineFrame
     public MineFrame(boolean host) {
@@ -69,6 +77,7 @@ public class MineFrame {
 
         statusbar = new JLabel("");//Set the passed-in status bar
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board
+
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
         startNewGame();
@@ -81,7 +90,24 @@ public class MineFrame {
         undoStack.removeAllElements();
         redoStack.removeAllElements();
         gamePanel.add(statusbar, BorderLayout.SOUTH);
+
         BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host);
+
+        JButton connButt = new JButton("Conectar");
+        connButt.addActionListener((ae) -> {
+
+            try {
+               board.setRemoteBoard((Board) Naming.lookup(getService("192.168.100.133", 7879))); //ip remoto
+            } catch (NotBoundException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        });
+        gamePanel.add(connButt, BorderLayout.NORTH);
+
         Board teste = null;
         try {
             teste = new BoardImpl(board);
