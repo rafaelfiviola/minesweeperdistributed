@@ -19,7 +19,7 @@ public class ServerImpl extends java.rmi.server.UnicastRemoteObject implements S
     }
 
     @Override
-    public int SendClick(int x, int y, boolean button) throws RemoteException {
+    public int SendClick(int x, int y, int button) throws RemoteException {
         //TODO passar o click para ser processado pela aplicação
         count++;
         return 1;

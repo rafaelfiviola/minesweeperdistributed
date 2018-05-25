@@ -14,6 +14,6 @@ public interface Server extends java.rmi.Remote {
     public int requestBoard(Object Board) throws java.rmi.RemoteException;
 
     //TODO Retornar Board
-    public int SendClick(int x, int y, boolean button) throws java.rmi.RemoteException;
+    public int SendClick(int x, int y, int button) throws java.rmi.RemoteException;
 
 }

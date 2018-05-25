@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.unifei.user.minesweeper;
+package mineSweeper.jogo;
 
 /**
  *
  * @author Van's Sexy Machine
  */
 public class Teste {
+    
     public static void main(String[] args) {
-        new MineFrame();
+        new MineFrame(true);
+        for (int i = 0; i < 10000; i++);
+        //new MineFrame(false);
     }
 }

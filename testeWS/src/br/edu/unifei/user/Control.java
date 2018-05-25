@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import mineSweeper.rmi.Server;
+import mineSweeper.jogo.Board;
 
 /**
  *
@@ -79,10 +80,10 @@ public class Control implements Runnable {
     public void run() {
         while (true) {
             try {
-
-                Server localServ = (Server) Naming.lookup(getService(localIP));
-                localServ.SendClick(port, port, host);
-                System.out.println("Resp:" + localServ.requestBoard(null));
+                  Board board = (Board)Naming.lookup(getService(localIP));
+//                Server localServ = (Server) Naming.lookup(getService(localIP));
+//                localServ.SendClick(port, port, port);
+//                System.out.println("Resp:" + localServ.requestBoard(null));
 
             } catch (NotBoundException ex) {
                 Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
