@@ -115,7 +115,7 @@ public class MineFrame {
             Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Thread server = new Thread(new LaunchServer(7879, "192.168.100.133", teste)); //ip local
+        Thread server = new Thread(new LaunchServer(7879, "192.168.100.110", teste)); //ip local
         server.start();
 
         gamePanel.add(board, BorderLayout.CENTER);
