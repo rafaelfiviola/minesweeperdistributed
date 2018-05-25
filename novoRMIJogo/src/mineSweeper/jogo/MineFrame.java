@@ -7,9 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -19,8 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
-public class MineFrame
-{
+public class MineFrame {
+
     //time the game was paused for
     private static double pauseTime = 0.0;
     private static double startPauseTime = 0;
@@ -49,51 +52,52 @@ public class MineFrame
     private static int height;
     private static int width;
 
-    //Declare the menu bar and its items (GUI elements)
-    private static JMenuItem pauseItem;
- 
-    private JRadioButtonMenuItem beginnerItem, intermediateItem, expertItem;
-    
     private static boolean host;
 
-    public static boolean isHost() {
-        return host;
-    }
+    //Declare the menu bar and its items (GUI elements)
+    private static JMenuItem pauseItem;
 
-    public static void setHost(boolean host) {
-        MineFrame.host = host;
-    }
+    private JRadioButtonMenuItem beginnerItem, intermediateItem, expertItem;
 
     //Constructor of the MineFrame
-    public MineFrame(boolean host)
-    {
+    public MineFrame(boolean host) {
         frame = new JFrame();//Create the frame for the GUI
-        this.host = host;
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
-        
+
         statusbar = new JLabel("");//Set the passed-in status bar
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board
         frame.add(gamePanel);//Add gamePanel to the frame
+        this.host = host;
         startNewGame();
         frame.setVisible(true);//Show all components on the window
     }
 
     //Method to start/restart the game when a game has been lost, restarted or loaded
-    public static void startNewGame()
-    {
+    public static void startNewGame() {
         gamePanel.removeAll();
         undoStack.removeAllElements();
         redoStack.removeAllElements();
         gamePanel.add(statusbar, BorderLayout.SOUTH);
-        BoardJPanel b = new BoardJPanel(statusbar, noOfMines, noOfRows, noOfCols,host);
-        gamePanel.add(b, BorderLayout.CENTER);               
-        Thread server = new Thread(new LaunchServer(7879,"192.168.100.128", b.getLocalBoard()));
+        BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host);
+        Board teste = null;
+        try {
+            teste = new BoardImpl(board);
+        } catch (RemoteException ex) {
+            Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (host) {
+            Thread server = new Thread(new LaunchServer(7879, "192.168.100.110", teste));
+            server.start();
+        }
+        
+        gamePanel.add(board, BorderLayout.CENTER);
 
         playingGame = true;//Set to true so the user may make actions
         startTime = System.currentTimeMillis(); //save the time the game started
-        
+
         calcDimentions();
         gamePanel.setPreferredSize(new Dimension(width, height));
         gamePanel.validate();
@@ -105,99 +109,80 @@ public class MineFrame
         frame.pack();
     }
 
-    
-
     //Accessors and mutators
-
     //Accessor for the number of mines
-    public static int getNoOfMines()
-    {
+    public static int getNoOfMines() {
         return noOfMines;
     }
 
     //Mutator for the number of mines
-    public static void setNoOfMines(int noOfMines)
-    {
+    public static void setNoOfMines(int noOfMines) {
         MineFrame.noOfMines = noOfMines;
     }
 
     //Accessor for the number of columns
-    public static int getNoOfCols()
-    {
+    public static int getNoOfCols() {
         return noOfCols;
     }
 
     //Mutator for the number of columns
-    public static void setNoOfCols(int noOfCols)
-    {
+    public static void setNoOfCols(int noOfCols) {
         MineFrame.noOfCols = noOfCols;
     }
 
     //Accessor for the number of rows
-    public static int getNoOfRows()
-    {
+    public static int getNoOfRows() {
         return noOfRows;
     }
 
     //Mutator for the number of rows
-    public static void setNoOfRows(int noOfRows)
-    {
+    public static void setNoOfRows(int noOfRows) {
         MineFrame.noOfRows = noOfRows;
     }
-    
+
     //Setter for width and height
-    public static void setWidth(int width)
-    {
+    public static void setWidth(int width) {
         MineFrame.width = width;
     }
-    
-    public static void setHeight(int height)
-    {
+
+    public static void setHeight(int height) {
         MineFrame.height = height;
     }
 
     //Method that returns the time elapsed from the time a game was started
-    public static double getCurrentTime()
-    {
+    public static double getCurrentTime() {
         double endTime = System.currentTimeMillis();
         return (endTime - startTime) / 1000.0;
     }
 
-    public static void timePause()
-    {
-        if (playingGame)
-        {
+    public static void timePause() {
+        if (playingGame) {
             startPauseTime = System.currentTimeMillis();
         }
 
-        if (!playingGame)
-        {
+        if (!playingGame) {
             double endPauseTime = System.currentTimeMillis();
             pauseTime += (endPauseTime - startPauseTime) / 1000.0;
         }
     }
 
     //Method that returns the score (total time - paused time)
-    public static double getScore()
-    {
+    public static double getScore() {
         return getCurrentTime() - pauseTime;
     }
-    
-    public static void calcDimentions(){
-    	width = noOfCols*15;
-    	height = noOfRows*15+20;
+
+    public static void calcDimentions() {
+        width = noOfCols * 15;
+        height = noOfRows * 15 + 20;
     }
 
     //Class to handle the game difficulty changes
-    
-    public class newGameListener implements ActionListener
-    {
+    public class newGameListener implements ActionListener {
+
         //Create a newGame after user agrees
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             int ask = JOptionPane.showConfirmDialog(null, "Are you sure?");
-            if (ask == 0)
-            {
+            if (ask == 0) {
                 MineFrame.startNewGame();
             }
         }

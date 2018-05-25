@@ -13,10 +13,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 import mineSweeper.rmi.Server;
-import mineSweeper.jogo.Board;
 
 /**
  *
@@ -85,7 +82,7 @@ public class Control implements Runnable {
 //                localServ.SendClick(port, port, port);
 //                System.out.println("Resp:" + localServ.requestBoard(null));
 
-            } catch (NotBoundException ex) {
+            } catch (NotBoundException ex) { 
                 Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MalformedURLException ex) {
                 Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);

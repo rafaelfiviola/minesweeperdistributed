@@ -16,10 +16,10 @@ import mineSweeper.rmi.ServerLaunch;
 public class HelloWorldPublisher {
 
     public static void main(String[] args) {
-//        Thread runServ = new Thread(new ServerLaunch(7879, "192.168.100.126"));
+//        Thread runServ = new Thread(new ServerLaunch(7879, "192.168.100.110"));
 //        runServ.start();
 //        for (int i = 0; i < 100000; i++);
-         Thread client = new Thread(new Control(true,"192.168.100.126","",7879));
+         Thread client = new Thread(new Control(true,"192.168.100.110","",7879));
           client.start();
     }
 }
