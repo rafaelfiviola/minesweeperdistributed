@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -57,12 +60,14 @@ public class MineFrame {
     private static int width;
 
     private static boolean host;
+    private static String remoteIP, localIP;
+    private static boolean conected;
 
     //Declare the menu bar and its items (GUI elements)
     private static JMenuItem pauseItem;
 
     private JRadioButtonMenuItem beginnerItem, intermediateItem, expertItem;
-    
+
     private static String getService(String serverIp, int port) {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
@@ -75,11 +80,19 @@ public class MineFrame {
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
 
+        conected = false;
+
         statusbar = new JLabel("");//Set the passed-in status bar
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board
+        try {
+            localIP = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
+        //remoteIP tem que ser setado antes daqui para host == false
         startNewGame();
         frame.setVisible(true);//Show all components on the window
     }
@@ -91,29 +104,24 @@ public class MineFrame {
         redoStack.removeAllElements();
         gamePanel.add(statusbar, BorderLayout.SOUTH);
 
-        BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host);
+        BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host, remoteIP);
 
-        JButton connButt = new JButton("Conectar");
-        connButt.addActionListener((ae) -> {
-
-            try {
-               board.setRemoteBoard((Board) Naming.lookup(getService("192.168.100.133", 7879))); //ip remoto
-            } catch (NotBoundException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RemoteException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        });
-        if(host){
-            connButt.setVisible(true);
-        }else{
-            connButt.setVisible(false);
-        }
-            
-        gamePanel.add(connButt, BorderLayout.NORTH);
-
+//        JButton connButt = new JButton("Conectar");
+//        connButt.addActionListener((ae) -> {
+//            remoteIP tem que ser setado aqui para host == true
+//            try {
+//                board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879))); //ip remoto
+//            } catch (NotBoundException ex) {
+//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (MalformedURLException ex) {
+//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (RemoteException ex) {
+//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        });
+//
+//        connButt.setVisible(host);
+//        gamePanel.add(connButt, BorderLayout.NORTH);
         Board teste = null;
         try {
             teste = new BoardImpl(board);
@@ -121,9 +129,12 @@ public class MineFrame {
             Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Thread server = new Thread(new LaunchServer(7879, "192.168.100.110", teste)); //ip local
+        Thread server = new Thread(new LaunchServer(7879, localIP, teste)); //ip local
         server.start();
 
+        if (host) {
+
+        }
         gamePanel.add(board, BorderLayout.CENTER);
 
         playingGame = true;//Set to true so the user may make actions
@@ -138,6 +149,22 @@ public class MineFrame {
         int y = (int) ((dimension.getHeight() - height - 100) / 2);
         frame.setLocation(x, y);
         frame.pack();
+        if (host) {
+            while (!conected) { //enquanto não tem um cliente espera alguem conectar 
+                if(false) //quando alguem se conectar (ta if(false) so pro netbeans para de enche o saco que tem um if() )
+                    conected = true;
+            }
+            //seta aqui o remoteIP se host == true
+            try {
+                board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
+            } catch (NotBoundException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     //Accessors and mutators

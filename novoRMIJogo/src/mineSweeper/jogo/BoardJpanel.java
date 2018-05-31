@@ -53,19 +53,21 @@ public class BoardJpanel extends JPanel {
 
     private Board remoteBoard;
 
+    private String remoteIP;
+
     public void setRemoteBoard(Board remoteBoard) {
         this.remoteBoard = remoteBoard;
     }
-    
 
     //Constructor
-    public BoardJpanel(JLabel statusbar, int noOfMines, int noOfRows, int noOfCols, boolean host) {
+    public BoardJpanel(JLabel statusbar, int noOfMines, int noOfRows, int noOfCols, boolean host, String remoteIP) {
         //Set the values of the member variables as determined by the MineFrame class
         this.statusbar = statusbar;
         mines = noOfMines;
         rows = noOfRows;
         cols = noOfCols;
         this.host = host;
+        this.remoteIP = remoteIP;
 
         //Declare image array
         img = new Image[NUM_IMAGES];
@@ -78,7 +80,7 @@ public class BoardJpanel extends JPanel {
         setDoubleBuffered(true);
 
         addMouseListener(new MinesAdapter());
-        newGame();
+        //newGame();
     }
 
     // set solved (mutator/setter)
@@ -143,7 +145,6 @@ public class BoardJpanel extends JPanel {
 
         //Set the text for the status bar
         statusbar.setText(mineStr + Integer.toString(mines_left));
-
 
         //Reset i to 0
         if (host) {
@@ -228,7 +229,7 @@ public class BoardJpanel extends JPanel {
             }
         } else {
             try {
-               remoteBoard = (Board) Naming.lookup(getService("192.168.100.133", 7879)); //ip remoto           
+                remoteBoard = (Board) Naming.lookup(getService(remoteIP, 7879)); //ip remoto           
                 field = remoteBoard.getField();
             } catch (RemoteException ex) {
                 Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
