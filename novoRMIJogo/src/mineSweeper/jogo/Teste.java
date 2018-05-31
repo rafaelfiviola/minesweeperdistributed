@@ -11,7 +11,7 @@ package mineSweeper.jogo;
  */
 public class Teste {
     public static void main(String[] args) {
-        new MineFrame(true); //inicia como servidor
+        //new MineFrame(true,null); //inicia como servidor
     //   for (int i = 0; i < 100000; i++);
 //        new MineFrame(false); //inicia como cliente
     }

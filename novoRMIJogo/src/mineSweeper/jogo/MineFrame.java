@@ -28,6 +28,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import mineSweeper.udp.ServidorUdp;
 
 public class MineFrame {
 
@@ -73,7 +74,7 @@ public class MineFrame {
     }
 
     //Constructor of the MineFrame
-    public MineFrame(boolean host) {
+    public MineFrame(boolean host, String remoteIP) {
         frame = new JFrame();//Create the frame for the GUI
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
@@ -92,7 +93,19 @@ public class MineFrame {
 
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
-        //remoteIP tem que ser setado antes daqui para host == false
+        
+        //Caso seja host o ip remoto será o iplocal e o servidor udp é iniciado para permitir o descobrimento do ip do servidor
+        if(host){
+            remoteIP = localIP;
+            ServidorUdp.go();
+        }else{
+            if(remoteIP != null){
+                this.remoteIP = remoteIP;
+            }else{
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, "IP remoto não foi passado");
+            }
+        }
+        
         startNewGame();
         frame.setVisible(true);//Show all components on the window
     }
@@ -103,9 +116,7 @@ public class MineFrame {
         undoStack.removeAllElements();
         redoStack.removeAllElements();
         gamePanel.add(statusbar, BorderLayout.SOUTH);
-
         BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host, remoteIP);
-
 //        JButton connButt = new JButton("Conectar");
 //        connButt.addActionListener((ae) -> {
 //            remoteIP tem que ser setado aqui para host == true
