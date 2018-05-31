@@ -43,13 +43,14 @@ public class BoardJpanel extends JPanel {
     private static int cols;
     private int all_cells;
     private JLabel statusbar;
-
+    
     private String mineStr = "Mines left: ";
 
     private static int difficulty;
     private static boolean solved = false;
 
     private boolean host;
+    private boolean conect;
 
     private Board remoteBoard;
 
@@ -58,6 +59,9 @@ public class BoardJpanel extends JPanel {
     public void setRemoteBoard(Board remoteBoard) {
         this.remoteBoard = remoteBoard;
     }
+    
+
+
 
     //Constructor
     public BoardJpanel(JLabel statusbar, int noOfMines, int noOfRows, int noOfCols, boolean host, String remoteIP) {
@@ -68,6 +72,7 @@ public class BoardJpanel extends JPanel {
         cols = noOfCols;
         this.host = host;
         this.remoteIP = remoteIP;
+        conect = false;
 
         //Declare image array
         img = new Image[NUM_IMAGES];
@@ -79,8 +84,8 @@ public class BoardJpanel extends JPanel {
 
         setDoubleBuffered(true);
 
-        addMouseListener(new MinesAdapter());
-        //newGame();
+        
+        newGame();
     }
 
     // set solved (mutator/setter)
@@ -450,13 +455,14 @@ public class BoardJpanel extends JPanel {
         }
     }
 
-//Click event when user clicked a field
-    class MinesAdapter extends MouseAdapter {
-
-        public void mousePressed(MouseEvent e) {
-            int x = e.getX();
-            int y = e.getY();
-            processClick(x, y, e.getButton(), true);
-        }
+    public boolean isConect() {
+        return conect;
     }
+
+    public void setConect(boolean conect) {
+        this.conect = conect;
+    }
+
+    
+
 }

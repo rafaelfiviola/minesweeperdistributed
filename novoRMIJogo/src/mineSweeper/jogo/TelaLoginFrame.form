@@ -60,6 +60,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEntrarJogoMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntrarJogoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCriarJogo">
@@ -68,6 +69,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCriarJogoMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCriarJogoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNick">

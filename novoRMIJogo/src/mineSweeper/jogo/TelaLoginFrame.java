@@ -1,6 +1,5 @@
 package mineSweeper.jogo;
 
-
 import mineSweeper.jogo.MineFrame;
 import mineSweeper.jogo.MineFrame;
 
@@ -9,14 +8,14 @@ import mineSweeper.jogo.MineFrame;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author laser
  */
 public class TelaLoginFrame extends javax.swing.JFrame {
+
     private String nick;
-    
+
     /**
      * Creates new form TelaLoginFrame
      */
@@ -46,11 +45,21 @@ public class TelaLoginFrame extends javax.swing.JFrame {
                 btnEntrarJogoMouseClicked(evt);
             }
         });
+        btnEntrarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarJogoActionPerformed(evt);
+            }
+        });
 
         btnCriarJogo.setText("Criar um novo jogo...");
         btnCriarJogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCriarJogoMouseClicked(evt);
+            }
+        });
+        btnCriarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarJogoActionPerformed(evt);
             }
         });
 
@@ -91,7 +100,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         nick = txtNick.getText();
         //No caso de host ñ é necessário passar ip remoto
-        new MineFrame(true,null); //inicia como servidor
+        new MineFrame(true, null); //inicia como servidor
         this.setVisible(false);
     }//GEN-LAST:event_btnCriarJogoMouseClicked
 
@@ -102,17 +111,25 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnEntrarJogoMouseClicked
 
+    private void btnCriarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarJogoActionPerformed
+        // TODO add your handling code here:
+        new MineFrame(true, null);
+    }//GEN-LAST:event_btnCriarJogoActionPerformed
+
+    private void btnEntrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarJogoActionPerformed
+        // TODO add your handling code here:
+        new ListarServidores();
+    }//GEN-LAST:event_btnEntrarJogoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaLoginFrame().setVisible(true);
             }
-        });     
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

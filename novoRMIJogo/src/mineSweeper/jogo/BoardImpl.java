@@ -36,4 +36,8 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
         game.processClick(x, y, button,remoteCall);
     }
     
+    @Override
+    public void informa(){
+       game.setConect(true);
+   }
 }

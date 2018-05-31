@@ -62,7 +62,6 @@ public class MineFrame {
 
     private static boolean host;
     private static String remoteIP, localIP;
-    private static boolean conected;
 
     //Declare the menu bar and its items (GUI elements)
     private static JMenuItem pauseItem;
@@ -81,8 +80,6 @@ public class MineFrame {
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
 
-        conected = false;
-
         statusbar = new JLabel("");//Set the passed-in status bar
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board
         try {
@@ -93,19 +90,20 @@ public class MineFrame {
 
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
-        
+        this.remoteIP = remoteIP;
+
         //Caso seja host o ip remoto será o iplocal e o servidor udp é iniciado para permitir o descobrimento do ip do servidor
-        if(host){
-            remoteIP = localIP;
-            ServidorUdp.go();
-        }else{
-            if(remoteIP != null){
-                this.remoteIP = remoteIP;
-            }else{
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, "IP remoto não foi passado");
-            }
-        }
-        
+//        if (host) {
+//            remoteIP = localIP;
+//            ServidorUdp.go();
+//        } else {
+//            if (remoteIP != null) {
+//                this.remoteIP = remoteIP;
+//            } else {
+//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, "IP remoto não foi passado");
+//            }
+//        }
+        //remoteIP tem que ser setado antes daqui caso host == false
         startNewGame();
         frame.setVisible(true);//Show all components on the window
     }
@@ -143,9 +141,6 @@ public class MineFrame {
         Thread server = new Thread(new LaunchServer(7879, localIP, teste)); //ip local
         server.start();
 
-        if (host) {
-
-        }
         gamePanel.add(board, BorderLayout.CENTER);
 
         playingGame = true;//Set to true so the user may make actions
@@ -161,13 +156,25 @@ public class MineFrame {
         frame.setLocation(x, y);
         frame.pack();
         if (host) {
-            while (!conected) { //enquanto não tem um cliente espera alguem conectar 
-                if(false) //quando alguem se conectar (ta if(false) so pro netbeans para de enche o saco que tem um if() )
-                    conected = true;
+            Esperando e = new Esperando();
+            while (board.isConect()) { //enquanto não tem um cliente espera alguem conectar 
+                e.setVisible(true);
             }
+            e.dispose();
             //seta aqui o remoteIP se host == true
             try {
                 board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
+            } catch (NotBoundException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                ((Board) (Naming.lookup(getService(remoteIP, 7879)))).informa();
+                board.setConect(true);
             } catch (NotBoundException ex) {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MalformedURLException ex) {
@@ -245,15 +252,4 @@ public class MineFrame {
         height = noOfRows * 15 + 20;
     }
 
-    //Class to handle the game difficulty changes
-    public class newGameListener implements ActionListener {
-
-        //Create a newGame after user agrees
-        public void actionPerformed(ActionEvent e) {
-            int ask = JOptionPane.showConfirmDialog(null, "Are you sure?");
-            if (ask == 0) {
-                MineFrame.startNewGame();
-            }
-        }
-    }
 }
