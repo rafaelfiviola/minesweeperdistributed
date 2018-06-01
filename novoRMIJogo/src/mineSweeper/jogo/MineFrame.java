@@ -73,7 +73,7 @@ public class MineFrame {
     }
 
     //Constructor of the MineFrame
-    public MineFrame(boolean host, String remoteIP) {
+    public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
         frame = new JFrame();//Create the frame for the GUI
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
@@ -91,25 +91,18 @@ public class MineFrame {
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
         this.remoteIP = remoteIP;
+        
+        //o servidor udp é iniciado para permitir o descobrimento do ip do servidor pelos clientes
+        if(host) {
+            ServidorUdp.go();
+        }
 
-        //Caso seja host o ip remoto será o iplocal e o servidor udp é iniciado para permitir o descobrimento do ip do servidor
-//        if (host) {
-//            remoteIP = localIP;
-//            ServidorUdp.go();
-//        } else {
-//            if (remoteIP != null) {
-//                this.remoteIP = remoteIP;
-//            } else {
-//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, "IP remoto não foi passado");
-//            }
-//        }
-        //remoteIP tem que ser setado antes daqui caso host == false
         startNewGame();
         frame.setVisible(true);//Show all components on the window
     }
 
     //Method to start/restart the game when a game has been lost, restarted or loaded
-    public static void startNewGame() {
+    public static void startNewGame() throws NotBoundException, MalformedURLException, RemoteException {
         gamePanel.removeAll();
         undoStack.removeAllElements();
         redoStack.removeAllElements();
@@ -161,7 +154,10 @@ public class MineFrame {
                 e.setVisible(true);
             }
             e.dispose();
-            //seta aqui o remoteIP se host == true
+            
+            //seta aqui o remoteIP com o ip que o cliente passou ao serviço quando chamou a função informa do host
+            remoteIP = ((BoardImpl) (Naming.lookup(getService(localIP, 7879)))).getRemoteIP();
+            
             try {
                 board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
             } catch (NotBoundException ex) {
@@ -173,7 +169,7 @@ public class MineFrame {
             }
         } else {
             try {
-                ((Board) (Naming.lookup(getService(remoteIP, 7879)))).informa();
+                ((Board) (Naming.lookup(getService(remoteIP, 7879)))).informa(localIP);
                 board.setConect(true);
             } catch (NotBoundException ex) {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);

@@ -13,7 +13,8 @@ import java.rmi.RemoteException;
  * @author Cesar
  */
 public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Board{
-
+    //Ip do cliente que é passado ao host quando ele chama a função informa
+    private String remoteIP;
     BoardJpanel game;
             
     public BoardImpl() throws RemoteException{
@@ -37,7 +38,18 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
     }
     
     @Override
-    public void informa(){
+    public void informa(String clientIP){
        game.setConect(true);
+       setRemoteIP(clientIP);
    }
+
+    public String getRemoteIP() {
+        return remoteIP;
+    }
+
+    public void setRemoteIP(String remoteIP) {
+        this.remoteIP = remoteIP;
+    }
+    
+    
 }
