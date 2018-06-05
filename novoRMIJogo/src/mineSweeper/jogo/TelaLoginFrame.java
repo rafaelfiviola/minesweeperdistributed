@@ -1,5 +1,10 @@
 package mineSweeper.jogo;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mineSweeper.jogo.MineFrame;
 import mineSweeper.jogo.MineFrame;
 
@@ -99,8 +104,16 @@ public class TelaLoginFrame extends javax.swing.JFrame {
     private void btnCriarJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCriarJogoMouseClicked
         // TODO add your handling code here:
         nick = txtNick.getText();
-        //No caso de host ñ é necessário passar ip remoto
-        new MineFrame(true, null); //inicia como servidor
+        try {
+            //No caso de host ñ é necessário passar ip remoto
+            new MineFrame(true, null); //inicia como servidor
+        } catch (NotBoundException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_btnCriarJogoMouseClicked
 
@@ -112,8 +125,16 @@ public class TelaLoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarJogoMouseClicked
 
     private void btnCriarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarJogoActionPerformed
-        // TODO add your handling code here:
-        new MineFrame(true, null);
+        try {
+            // TODO add your handling code here:
+            new MineFrame(true, null);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCriarJogoActionPerformed
 
     private void btnEntrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarJogoActionPerformed

@@ -388,7 +388,7 @@ public class BoardJpanel extends JPanel {
         }
     }
 
-    public synchronized void processClick(int x, int y, int button, boolean remoteCall) {
+    public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
         if (remoteCall) {
             try {
                 remoteBoard.processClick(x, y, button, false);

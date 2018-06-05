@@ -1,7 +1,12 @@
 package mineSweeper.jogo;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import mineSweeper.udp.ClienteUdp;
 
@@ -197,7 +202,15 @@ public class ListarServidores extends javax.swing.JFrame {
         // TODO add your handling code here:
         //No caso de cliente o ip do servidor escolhido é passado 
         selectedServerString = servCbx.getSelectedItem().toString();
-        new MineFrame(false, selectedServerString); 
+        try { 
+            new MineFrame(false, selectedServerString);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
         
     }//GEN-LAST:event_selecionarBtnMouseClicked

@@ -47,7 +47,7 @@ public class ClienteUdp implements Runnable {
         //boolean receivedResponse = false;      
         
         try {
-            InetAddress broadCast = InetAddress.getByName("255.255.255.255");
+            InetAddress broadCast = InetAddress.getByName("200.235.71.255");
             socketUdp = new DatagramSocket();
             socketUdp.setBroadcast(true);
             buffer = new byte[BUFFERSIZE];
