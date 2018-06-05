@@ -26,6 +26,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
      */
     public TelaLoginFrame() {
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -142,7 +143,9 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         new ListarServidores();
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
-
+    public static void main(String[] args) {
+        TelaLoginFrame tela = new TelaLoginFrame();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCriarJogo;
     private javax.swing.JButton btnEntrarJogo;

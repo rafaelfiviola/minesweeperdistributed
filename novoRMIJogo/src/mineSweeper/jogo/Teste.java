@@ -5,6 +5,12 @@
  */
 package mineSweeper.jogo;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Van's Sexy Machine
@@ -12,9 +18,17 @@ package mineSweeper.jogo;
 public class Teste {
 
     public static void main(String[] args) {
-//        String localIP = ;
-//        new MineFrame(true, null); //inicia como servidor
-//        for (int i = 0; i < 100000; i++);
-//        new MineFrame(false, localIP); //inicia como cliente
+        try {
+//            String remoteIP = ; //
+            new MineFrame(true, null); //inicia como servidor
+//            for (int i = 0; i < 100000; i++);
+//            new MineFrame(false, remoteIP); //inicia como cliente
+        } catch (NotBoundException ex) {
+            Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
