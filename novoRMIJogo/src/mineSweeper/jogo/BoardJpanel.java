@@ -46,7 +46,6 @@ public class BoardJpanel extends JPanel {
     
     private String mineStr = "Mines left: ";
 
-    private static int difficulty;
     private static boolean solved = false;
 
     private boolean host;
@@ -96,11 +95,6 @@ public class BoardJpanel extends JPanel {
     // set inGame (mutator/setter)
     public static void setInGame(boolean newState) {
         inGame = newState;
-    }
-
-    //set difficulty (mutator/setter)
-    public static void setDifficulty(int newDifficulty) {
-        difficulty = newDifficulty;
     }
 
     //Gets the field and returns it (getter)
@@ -461,6 +455,14 @@ public class BoardJpanel extends JPanel {
 
     public void setConect(boolean conect) {
         this.conect = conect;
+    }
+
+    public String getRemoteIP() {
+        return remoteIP;
+    }
+
+    public void setRemoteIP(String remoteIP) {
+        this.remoteIP = remoteIP;
     }
 
     

@@ -6,7 +6,11 @@
 package mineSweeper.jogo;
 
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,7 +18,6 @@ import java.rmi.RemoteException;
  */
 public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Board{
     //Ip do cliente que é passado ao host quando ele chama a função informa
-    private String remoteIP;
     BoardJpanel game;
             
     public BoardImpl() throws RemoteException{
@@ -34,22 +37,22 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
 
     @Override
     public void processClick(int x, int y, int button, boolean remoteCall) throws RemoteException {
-        game.processClick(x, y, button,remoteCall);
+        try {
+            game.processClick(x, y, button,remoteCall);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(BoardImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(BoardImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
     public void informa(String clientIP){
+       game.setRemoteIP(clientIP);
        game.setConect(true);
-       setRemoteIP(clientIP);
    }
 
-    public String getRemoteIP() {
-        return remoteIP;
-    }
+ 
 
-    public void setRemoteIP(String remoteIP) {
-        this.remoteIP = remoteIP;
-    }
-    
     
 }

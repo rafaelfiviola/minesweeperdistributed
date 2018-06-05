@@ -64,9 +64,6 @@ public class MineFrame {
     private static String remoteIP, localIP;
 
     //Declare the menu bar and its items (GUI elements)
-    private static JMenuItem pauseItem;
-
-    private JRadioButtonMenuItem beginnerItem, intermediateItem, expertItem;
 
     private static String getService(String serverIp, int port) {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
@@ -156,7 +153,7 @@ public class MineFrame {
             e.dispose();
             
             //seta aqui o remoteIP com o ip que o cliente passou ao serviço quando chamou a função informa do host
-            remoteIP = ((BoardImpl) (Naming.lookup(getService(localIP, 7879)))).getRemoteIP();
+            remoteIP = board.getRemoteIP();
             
             try {
                 board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
@@ -170,7 +167,6 @@ public class MineFrame {
         } else {
             try {
                 ((Board) (Naming.lookup(getService(remoteIP, 7879)))).informa(localIP);
-                board.setConect(true);
             } catch (NotBoundException ex) {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MalformedURLException ex) {

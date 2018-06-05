@@ -142,16 +142,6 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         new ListarServidores();
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaLoginFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCriarJogo;

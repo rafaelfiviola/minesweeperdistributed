@@ -10,9 +10,11 @@ package mineSweeper.jogo;
  * @author Van's Sexy Machine
  */
 public class Teste {
+
     public static void main(String[] args) {
-        //new MineFrame(true,null); //inicia como servidor
-    //   for (int i = 0; i < 100000; i++);
-//        new MineFrame(false); //inicia como cliente
+//        String localIP = ;
+//        new MineFrame(true, null); //inicia como servidor
+//        for (int i = 0; i < 100000; i++);
+//        new MineFrame(false, localIP); //inicia como cliente
     }
 }
