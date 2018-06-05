@@ -47,7 +47,7 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
     }
     
     @Override
-    public void informa(String clientIP){
+    public void informa(String clientIP) throws RemoteException{
        game.setRemoteIP(clientIP);
        game.setConect(true);
    }

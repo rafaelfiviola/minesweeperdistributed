@@ -87,7 +87,8 @@ public class MineFrame {
 
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
-        this.remoteIP = remoteIP;
+        if (!host)
+            this.remoteIP = remoteIP;
         
         //o servidor udp é iniciado para permitir o descobrimento do ip do servidor pelos clientes
         if(host) {
@@ -147,8 +148,9 @@ public class MineFrame {
         frame.pack();
         if (host) {
             Esperando e = new Esperando();
-            while (board.isConect()) { //enquanto não tem um cliente espera alguem conectar 
-                e.setVisible(true);
+            e.setVisible(true);
+            while (!board.isConect()) { //enquanto não tem um cliente espera alguem conectar 
+                
             }
             e.dispose();
             
