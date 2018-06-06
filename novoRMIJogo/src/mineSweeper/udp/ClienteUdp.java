@@ -24,10 +24,12 @@ public class ClienteUdp implements Runnable {
     private static ClienteUdp clienteUdp;
     private DatagramSocket socketUdp;
     private DatagramPacket packetUdp;
+    private DatagramPacket packetReceivedUdp;
     private int serverPort;
     private static final int BUFFERSIZE = 1024;
     private static final int MAXTRIES = 5;
     private byte[] buffer;
+    private byte[] buffer2;
     private static ArrayList<String> serverList;
     
     public static void go(){
@@ -52,18 +54,22 @@ public class ClienteUdp implements Runnable {
             socketUdp.setBroadcast(true);
             buffer = new byte[BUFFERSIZE];
             buffer = (new String("123")).getBytes();
+            buffer2 = new byte[BUFFERSIZE];
             packetUdp = new DatagramPacket(buffer, buffer.length,broadCast,serverPort); 
+            packetReceivedUdp = new DatagramPacket(buffer2, buffer2.length,broadCast,serverPort);
             //O loop é executado dependendo do valor da quantidade de MAXTRIES. Cada pacote recebido (contendo o ip do servidor) é adicionado na lista de servers
             do{
                 socketUdp.send(packetUdp);
                 try{
-                    socketUdp.receive(packetUdp);
-                    serverList.add(new String(packetUdp.getData()));
+                    socketUdp.receive(packetReceivedUdp);
+                    serverList.add(new String(packetReceivedUdp.getData()));
+                    break;
                     //receivedResponse = true;
                 }catch (InterruptedIOException e){ 
                     tries += 1;
                     System.out.println("Timed out, " + (MAXTRIES - tries) + " more tries ...");
                 } 
+                tries += 1;
             }while((tries < MAXTRIES));
             socketUdp.close();
             
