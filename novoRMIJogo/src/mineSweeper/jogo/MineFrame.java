@@ -149,8 +149,7 @@ public class MineFrame {
         if (host) {
             Esperando e = new Esperando();
             e.setVisible(true);
-            while (!board.isConect()) { //enquanto não tem um cliente espera alguem conectar 
-                
+            while (!board.isConect()) { //enquanto não tem um cliente espera alguem conectar                 
             }
             e.dispose();
             

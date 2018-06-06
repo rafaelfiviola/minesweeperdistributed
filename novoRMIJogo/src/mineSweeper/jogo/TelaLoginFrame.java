@@ -126,6 +126,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarJogoMouseClicked
 
     private void btnCriarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarJogoActionPerformed
+        nick = txtNick.getText();
         try {
             // TODO add your handling code here:
             new MineFrame(true, null);
@@ -144,7 +145,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
     public static void main(String[] args) {
-        TelaLoginFrame tela = new TelaLoginFrame();
+        new TelaLoginFrame();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCriarJogo;

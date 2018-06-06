@@ -43,7 +43,7 @@ public class BoardJpanel extends JPanel {
     private static int cols;
     private int all_cells;
     private JLabel statusbar;
-    
+
     private String mineStr = "Mines left: ";
 
     private static boolean solved = false;
@@ -58,9 +58,6 @@ public class BoardJpanel extends JPanel {
     public void setRemoteBoard(Board remoteBoard) {
         this.remoteBoard = remoteBoard;
     }
-    
-
-
 
     //Constructor
     public BoardJpanel(JLabel statusbar, int noOfMines, int noOfRows, int noOfCols, boolean host, String remoteIP) {
@@ -83,7 +80,7 @@ public class BoardJpanel extends JPanel {
 
         setDoubleBuffered(true);
 
-        
+        addMouseListener(new MinesAdapter());
         newGame();
     }
 
@@ -465,6 +462,22 @@ public class BoardJpanel extends JPanel {
         this.remoteIP = remoteIP;
     }
 
-    
+    //Click event when user clicked a field
+//Click event when user clicked a field
+    class MinesAdapter extends MouseAdapter {
 
+        public void mousePressed(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            try {
+                processClick(x, y, e.getButton(), true);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
