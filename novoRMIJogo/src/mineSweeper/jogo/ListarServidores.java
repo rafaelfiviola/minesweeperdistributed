@@ -147,11 +147,14 @@ public class ListarServidores extends javax.swing.JFrame {
      * @param evt
      */
     private void procurarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarBtnActionPerformed
-        //Ao clicar no botão de procurar inicia-se o cliente udp para fazer um broadcast que acha os servidores existentes na rede
+                //Ao clicar no botão de procurar inicia-se o cliente udp para fazer um broadcast que acha os servidores existentes na rede
         ClienteUdp.go();
+        //Loop para esperar o cliente descobrir os hosts existentes
+        while(ClienteUdp.getNotFinish()){
+            System.out.println("");
+        }
         //Os servidores achados são postos na variável serverlist da classe clienteUdp
         serverInfoListString = ClienteUdp.getServerList();
-
 //////        //serverInfoList = fetchAllServers();
 //////
 //////        //PARA TESTES, REMOVER NA VERSÃO FINAL
@@ -215,9 +218,9 @@ public class ListarServidores extends javax.swing.JFrame {
     }//GEN-LAST:event_selecionarBtnMouseClicked
 
     private void updateLabels() {
-        nomeServLbl.setText(selectedServer.getName());
-        dificuldadeServLbl.setText(selectedServer.getDifficulty());
-        numeroServLbl.setText(selectedServer.getNumberOfPlayers().toString());
+//        nomeServLbl.setText(selectedServer.getName());
+//        dificuldadeServLbl.setText(selectedServer.getDifficulty());
+//        numeroServLbl.setText(selectedServer.getNumberOfPlayers().toString());
     }
 
     /**

@@ -30,7 +30,8 @@ public class ClienteUdp implements Runnable {
     private static final int MAXTRIES = 5;
     private byte[] buffer;
     private byte[] buffer2;
-    private static ArrayList<String> serverList;
+    private static ArrayList<String> serverList = new ArrayList<>();
+    private boolean notFinish = true;
     
     public static void go(){
         Thread threadClienteUdp = new Thread(clienteUdp = new ClienteUdp());
@@ -38,7 +39,11 @@ public class ClienteUdp implements Runnable {
     }
 
     public static ArrayList<String> getServerList() {
-        return serverList;
+        return clienteUdp.serverList;
+    }
+    
+    public static boolean getNotFinish() {
+        return clienteUdp.notFinish;
     }
     
     @Override
@@ -50,6 +55,7 @@ public class ClienteUdp implements Runnable {
         
         try {
             InetAddress broadCast = InetAddress.getByName("200.235.71.255");
+            // 255.255.255.255
             socketUdp = new DatagramSocket();
             socketUdp.setBroadcast(true);
             buffer = new byte[BUFFERSIZE];
@@ -58,12 +64,15 @@ public class ClienteUdp implements Runnable {
             packetUdp = new DatagramPacket(buffer, buffer.length,broadCast,serverPort); 
             packetReceivedUdp = new DatagramPacket(buffer2, buffer2.length,broadCast,serverPort);
             //O loop é executado dependendo do valor da quantidade de MAXTRIES. Cada pacote recebido (contendo o ip do servidor) é adicionado na lista de servers
+            socketUdp.send(packetUdp);
             do{
-                socketUdp.send(packetUdp);
                 try{
                     socketUdp.receive(packetReceivedUdp);
-                    serverList.add(new String(packetReceivedUdp.getData()));
-                    break;
+                    //O primeiro packet udp recebido é nulo, por isso verifica
+                    if(packetReceivedUdp != null){
+                        clienteUdp.serverList.add(new String(packetReceivedUdp.getData()));
+                        clienteUdp.notFinish = false; 
+                    }
                     //receivedResponse = true;
                 }catch (InterruptedIOException e){ 
                     tries += 1;
@@ -71,8 +80,7 @@ public class ClienteUdp implements Runnable {
                 } 
                 tries += 1;
             }while((tries < MAXTRIES));
-            socketUdp.close();
-            
+            socketUdp.close();            
         } catch (SocketException | UnknownHostException ex) {
             Logger.getLogger(ClienteUdp.class.getName()).log(Level.SEVERE, null, ex);
         }catch (IOException ex) {
