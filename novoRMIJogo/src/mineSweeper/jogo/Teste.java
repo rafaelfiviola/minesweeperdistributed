@@ -19,9 +19,9 @@ public class Teste {
 
     public static void main(String[] args) {
         try {
-//            new MineFrame(true, null); //inicia como servidor
+            new MineFrame(true, null); //inicia como servidor
 //            for (int i = 0; i < 100000; i++);
-            new MineFrame(false, "192.168.100.114"); //inicia como cliente
+//            new MineFrame(false, "192.168.100.119"); //inicia como cliente
         } catch (NotBoundException ex) {
             Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {

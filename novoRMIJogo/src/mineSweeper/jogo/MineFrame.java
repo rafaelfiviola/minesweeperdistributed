@@ -64,7 +64,6 @@ public class MineFrame {
     private static String remoteIP, localIP;
 
     //Declare the menu bar and its items (GUI elements)
-
     private static String getService(String serverIp, int port) {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
@@ -87,11 +86,12 @@ public class MineFrame {
 
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
-        if (!host)
+        if (!host) {
             this.remoteIP = remoteIP;
-        
+        }
+
         //o servidor udp é iniciado para permitir o descobrimento do ip do servidor pelos clientes
-        if(host) {
+        if (host) {
             ServidorUdp.go();
         }
 
@@ -149,13 +149,18 @@ public class MineFrame {
         if (host) {
             Esperando e = new Esperando();
             e.setVisible(true);
-            while (!board.isConect()) { //enquanto não tem um cliente espera alguem conectar                 
-            }
-            e.dispose();
+            System.out.println("Board Conect:" + board.isConect());
             
+            while (!(board.isConect())){ //enquanto não tem um cliente espera alguem conectar 
+                System.out.println(".");
+            }
+            
+            System.out.println("Board Conect:" + board.isConect());
+            e.dispose();
+
             //seta aqui o remoteIP com o ip que o cliente passou ao serviço quando chamou a função informa do host
             remoteIP = board.getRemoteIP();
-            
+
             try {
                 board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
             } catch (NotBoundException ex) {

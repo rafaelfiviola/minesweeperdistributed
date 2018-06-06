@@ -114,6 +114,23 @@ public class BoardJpanel extends JPanel {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
 
+    public boolean isConect() {
+        return conect;
+    }
+
+    public void setConect(boolean conect) {
+        this.conect = conect;
+        System.out.println("Conect:" + this.conect);
+    }
+
+    public String getRemoteIP() {
+        return remoteIP;
+    }
+
+    public void setRemoteIP(String remoteIP) {
+        this.remoteIP = remoteIP;
+    }
+
     // create a new game
     public void newGame() {
 
@@ -444,22 +461,6 @@ public class BoardJpanel extends JPanel {
                 pushFieldToUndoStack();
             }
         }
-    }
-
-    public boolean isConect() {
-        return conect;
-    }
-
-    public void setConect(boolean conect) {
-        this.conect = conect;
-    }
-
-    public String getRemoteIP() {
-        return remoteIP;
-    }
-
-    public void setRemoteIP(String remoteIP) {
-        this.remoteIP = remoteIP;
     }
 
     //Click event when user clicked a field
