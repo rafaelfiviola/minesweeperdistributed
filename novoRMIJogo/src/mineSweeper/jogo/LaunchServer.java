@@ -21,7 +21,7 @@ public class LaunchServer implements Runnable {
 
     private int port;
     private String serverIp;
-    Registry registry;
+    Registry registry = null;
     Board board;
 
     public LaunchServer(Integer port, String serverIp, Board board) {

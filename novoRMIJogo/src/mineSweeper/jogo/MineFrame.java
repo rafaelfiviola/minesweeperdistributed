@@ -122,11 +122,8 @@ public class MineFrame {
         }
         Logger.getLogger(MineFrame.class.getName()).log(Level.INFO, "Launching Server");
 
-        if (host) {
             Thread server = new Thread(new LaunchServer(7879, localIP, teste));
             server.start();
-
-        } //ip local
 
         gamePanel.add(board, BorderLayout.CENTER);
 
