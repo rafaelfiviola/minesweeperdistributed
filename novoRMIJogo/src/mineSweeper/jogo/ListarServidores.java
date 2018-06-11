@@ -23,10 +23,11 @@ public class ListarServidores extends javax.swing.JFrame {
 
     private List<ServerInfo> serverInfoList;
     private ServerInfo selectedServer;
+    private ClienteUdp clienteUdp;
+    private Thread threadClientUdp;
 
     //Essas duas variáveis foram criadas para receber o conteúdo do servidor udp (que é uma string e nesse momento é apenas o ip do servidor),
     //depois é possível passar mais informações pela string e criar esse objeto serverInfo para cada servidor
-    private List<String> serverInfoListString;
     private String selectedServerString;
 
     /**
@@ -147,74 +148,28 @@ public class ListarServidores extends javax.swing.JFrame {
      * @param evt
      */
     private void procurarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarBtnActionPerformed
-                //Ao clicar no botão de procurar inicia-se o cliente udp para fazer um broadcast que acha os servidores existentes na rede
-        ClienteUdp.go();
-        //Loop para esperar o cliente descobrir os hosts existentes
-        while(ClienteUdp.getNotFinish()){
-            System.out.println("");
-        }
-        //Os servidores achados são postos na variável serverlist da classe clienteUdp
-        serverInfoListString = ClienteUdp.getServerList();
-//////        //serverInfoList = fetchAllServers();
-//////
-//////        //PARA TESTES, REMOVER NA VERSÃO FINAL
-//////        ServerInfo si = new ServerInfo();
-//////        si.setName("aaa");
-//////        si.setIpAdress("192.168.0.1");
-//////        si.setDifficulty("Hard");
-//////        si.setNumberOfPlayers(5);
-//////        serverInfoList.add(si);
-//////
-//////        ServerInfo si2 = new ServerInfo();
-//////        si2.setName("aa22a");
-//////        si2.setIpAdress("192.168.0.5");
-//////        si2.setDifficulty("Medium");
-//////        si2.setNumberOfPlayers(4);
-//////        serverInfoList.add(si2);
-//////
-//////        //Por agora, to criando essa lista no braço, mas o fetch deveria ser aqui
-//////        boolean condition = true;
-//////        if (condition) {
-//////            servCbx.removeAllItems();
-//////            System.out.println("Logging inside condition, removed all items, adding new ones");
-//////            serverInfoList.forEach(servCbx::addItem);
-//////            servCbx.setSelectedIndex(0);
-//////        }
-        //Preenche serverCbx com o conteúdo proveniente da serverList do cliente UDP
-        servCbx.removeAllItems();
-        System.out.println("Logging inside condition, removed all items, adding new ones");
-        serverInfoListString.forEach(servCbx::addItem);
-        servCbx.setSelectedIndex(0);
-
+        clienteUdp = new ClienteUdp(this);
+        threadClientUdp = new Thread(clienteUdp);
+        threadClientUdp.start();
     }//GEN-LAST:event_procurarBtnActionPerformed
 
-    private void servCbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servCbxActionPerformed
-//        selectedServer = (ServerInfo) servCbx.getSelectedItem();
-//        if (selectedServer != null) {
-//            updateLabels();
-//        }
 
-        selectedServerString = (String) servCbx.getSelectedItem();
-        if (selectedServerString != null) {
+    private void servCbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servCbxActionPerformed
+        selectedServer = (ServerInfo) servCbx.getSelectedItem();
+        if (selectedServer != null) {
             updateLabels();
         }
     }//GEN-LAST:event_servCbxActionPerformed
 
     private void selecionarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selecionarBtnMouseClicked
-        // TODO add your handling code here:
         //No caso de cliente o ip do servidor escolhido é passado 
-        selectedServerString = servCbx.getSelectedItem().toString();
+        selectedServerString = ((ServerInfo) servCbx.getSelectedItem()).getIpAddressString();
         try {
             new MineFrame(false, selectedServerString);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);
-
     }//GEN-LAST:event_selecionarBtnMouseClicked
 
     private void updateLabels() {
@@ -223,9 +178,16 @@ public class ListarServidores extends javax.swing.JFrame {
 //        numeroServLbl.setText(selectedServer.getNumberOfPlayers().toString());
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    public void updateServCbx(List<ServerInfo> lsi) {
+        servCbx.removeAllItems();
+        System.out.println("Logging inside condition, removed all items, adding new ones");
+        lsi.forEach(servCbx::addItem);
+        servCbx.setSelectedIndex(0);
+    }
+
+    public static void main(String[] args) {
+        ListarServidores window = new ListarServidores();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel dificuldadeLbl;

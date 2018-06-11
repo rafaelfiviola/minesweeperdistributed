@@ -3,31 +3,18 @@ package mineSweeper.jogo;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
 import mineSweeper.udp.ServidorUdp;
 
 public class MineFrame {
@@ -68,6 +55,10 @@ public class MineFrame {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
 
+    public MineFrame() throws NotBoundException, MalformedURLException, RemoteException {
+        new MineFrame(true, null);
+    }
+
     //Constructor of the MineFrame
     public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
         frame = new JFrame();//Create the frame for the GUI
@@ -92,6 +83,7 @@ public class MineFrame {
 
         //o servidor udp é iniciado para permitir o descobrimento do ip do servidor pelos clientes
         if (host) {
+            System.out.println("Iniciando Servidor UDP");
             ServidorUdp.go();
         }
 
@@ -128,9 +120,13 @@ public class MineFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Logger.getLogger(MineFrame.class.getName()).log(Level.INFO, "Launching Server");
 
-        Thread server = new Thread(new LaunchServer(7879, localIP, teste)); //ip local
-        server.start();
+        if (host) {
+            Thread server = new Thread(new LaunchServer(7879, localIP, teste));
+            server.start();
+
+        } //ip local
 
         gamePanel.add(board, BorderLayout.CENTER);
 
@@ -150,11 +146,10 @@ public class MineFrame {
             Esperando e = new Esperando();
             e.setVisible(true);
             System.out.println("Board Conect:" + board.isConect());
-            
-            while (!(board.isConect())){ //enquanto não tem um cliente espera alguem conectar 
-                System.out.println(".");
+
+            while (!(board.isConect())) { //enquanto não tem um cliente espera alguem conectar 
             }
-            
+
             System.out.println("Board Conect:" + board.isConect());
             e.dispose();
 
@@ -163,21 +158,13 @@ public class MineFrame {
 
             try {
                 board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
-            } catch (NotBoundException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RemoteException ex) {
+            } catch (NotBoundException | MalformedURLException | RemoteException ex) {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
                 ((Board) (Naming.lookup(getService(remoteIP, 7879)))).informa(localIP);
-            } catch (NotBoundException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RemoteException ex) {
+            } catch (NotBoundException | MalformedURLException | RemoteException ex) {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

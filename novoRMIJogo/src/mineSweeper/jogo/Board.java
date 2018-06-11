@@ -9,11 +9,11 @@ package mineSweeper.jogo;
  *
  * @author Cesar
  */
-public interface Board extends java.rmi.Remote  {
-    
+public interface Board extends java.rmi.Remote {
+
     public int[] getField() throws java.rmi.RemoteException;
-    
+
     public void processClick(int x, int y, int button, boolean remoteCall) throws java.rmi.RemoteException;
-    
-    public void informa(String clientIP)throws java.rmi.RemoteException;
+
+    public void informa(String clientIP) throws java.rmi.RemoteException;
 }

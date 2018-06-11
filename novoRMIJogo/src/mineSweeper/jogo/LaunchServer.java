@@ -17,13 +17,14 @@ import java.util.logging.Logger;
  *
  * @author Cesar
  */
-public class LaunchServer implements Runnable{
+public class LaunchServer implements Runnable {
+
     private int port;
     private String serverIp;
-    Registry registry = null;
+    Registry registry;
     Board board;
 
-    public LaunchServer(int port, String serverIp,Board board) {
+    public LaunchServer(Integer port, String serverIp, Board board) {
         this.port = port;
         this.serverIp = serverIp;
         this.board = board;
@@ -47,14 +48,15 @@ public class LaunchServer implements Runnable{
 
     @Override
     public void run() {
-       // System.setProperty("java.rmi.server.hostname", serverIp);
+        // System.setProperty("java.rmi.server.hostname", serverIp);
         try {
             registry = LocateRegistry.createRegistry(port);
-            Naming.rebind("rmi://"+serverIp+":"+port+"/RemoteGameService", board);
-       
-        } catch (RemoteException ex) {
-            Logger.getLogger(LaunchServer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
+            Logger.getLogger(LaunchServer.class.getName()).log(Level.INFO, "Running launchServer");
+            Logger.getLogger(LaunchServer.class.getName()).log(Level.INFO, "rmi://" + serverIp + ":" + port + "/RemoteGameService", board);
+            
+            Naming.rebind("rmi://" + serverIp + ":" + port + "/RemoteGameService", board);
+            
+        } catch (RemoteException | MalformedURLException ex) {
             Logger.getLogger(LaunchServer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
