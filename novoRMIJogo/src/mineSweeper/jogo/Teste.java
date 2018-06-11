@@ -20,12 +20,8 @@ public class Teste {
     public static void main(String[] args) {
         try {
             new MineFrame(); //inicia como servidor
-//            new MineFrame(false, "192.168.0.179"); //inicia como cliente
-        } catch (NotBoundException ex) {
-            Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+//            new MineFrame("192.168.0.179"); //inicia como cliente
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

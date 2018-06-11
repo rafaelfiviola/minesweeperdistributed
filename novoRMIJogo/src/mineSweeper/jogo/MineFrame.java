@@ -55,12 +55,26 @@ public class MineFrame {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
 
+    /**
+     * Esse construtor inicia o MineFrame em modo servidor 
+     * @throws NotBoundException
+     * @throws MalformedURLException
+     * @throws RemoteException
+     */
     public MineFrame() throws NotBoundException, MalformedURLException, RemoteException {
-        new MineFrame(true, null);
+        new MineFrame(null);
     }
 
-    //Constructor of the MineFrame
-    public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
+    /**
+     * Esse construtor inicia o MineFrame em modo cliente, e necessita um ip;
+     * @param remoteIP
+     * @throws NotBoundException
+     * @throws MalformedURLException
+     * @throws RemoteException
+     */
+    public MineFrame(String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
+        host = remoteIP == null;
+        
         frame = new JFrame();//Create the frame for the GUI
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed

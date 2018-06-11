@@ -165,7 +165,7 @@ public class ListarServidores extends javax.swing.JFrame {
         //No caso de cliente o ip do servidor escolhido é passado 
         selectedServerString = ((ServerInfo) servCbx.getSelectedItem()).getIpAddressString();
         try {
-            new MineFrame(false, selectedServerString);
+            new MineFrame(selectedServerString);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
         }

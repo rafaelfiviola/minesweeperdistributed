@@ -106,13 +106,8 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         nick = txtNick.getText();
         try {
-            //No caso de host ñ é necessário passar ip remoto
-            new MineFrame(true, null); //inicia como servidor
-        } catch (NotBoundException ex) {
-            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+            new MineFrame(null); //inicia como servidor
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);
@@ -129,12 +124,8 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         nick = txtNick.getText();
         try {
             // TODO add your handling code here:
-            new MineFrame(true, null);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+            new MineFrame(null);
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCriarJogoActionPerformed
