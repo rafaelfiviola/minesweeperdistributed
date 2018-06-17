@@ -240,6 +240,7 @@ public class BoardJpanel extends JPanel {
                     }
                 }
             }
+            
         } else {
             try {
                 remoteBoard = (Board) Naming.lookup(getService(remoteIP, 7879)); //ip remoto           
@@ -254,6 +255,7 @@ public class BoardJpanel extends JPanel {
         }
         // save first undo to stack
         pushFieldToUndoStack();
+        this.repaint();
     }
 
     // search & uncover cell when there isn't a mine around it
@@ -397,6 +399,10 @@ public class BoardJpanel extends JPanel {
     }
 
     public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
+        if (!inGame) {
+            this.newGame();            
+        }
+        
         if (remoteCall) {
             try {
                 remoteBoard.processClick(x, y, button, false);
@@ -409,9 +415,7 @@ public class BoardJpanel extends JPanel {
 
         boolean rep = false;
 
-        if (!inGame) {
-            new TelaLoginFrame();
-        }
+        
 
         if ((x < cols * CELL_SIZE) && (y < rows * CELL_SIZE) && MineFrame.playingGame) {
 
