@@ -400,8 +400,8 @@ public class BoardJpanel extends JPanel {
     public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
         if (!inGame) {
             this.newGame();
-            processClick(x, y, button, true);
-        } else {
+            remoteBoard.processClick(x, y, button, true);
+        }
 
             if (remoteCall) {
                 try {
@@ -464,7 +464,7 @@ public class BoardJpanel extends JPanel {
                     pushFieldToUndoStack();
                 }
             }
-        }
+        
     }
 
     //Click event when user clicked a field
