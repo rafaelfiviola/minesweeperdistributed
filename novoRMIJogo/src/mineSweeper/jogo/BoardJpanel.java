@@ -240,7 +240,7 @@ public class BoardJpanel extends JPanel {
                     }
                 }
             }
-           
+
         } else {
             try {
                 remoteBoard = (Board) Naming.lookup(getService(remoteIP, 7879)); //ip remoto           
@@ -398,72 +398,71 @@ public class BoardJpanel extends JPanel {
     }
 
     public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
-        if ((!inGame) && (host)) {
+        if (!inGame) {
             this.newGame();
-        }
+            processClick(x, y, button, true);
+        } else {
 
-        if (remoteCall) {
-            try {
-                remoteBoard.processClick(x, y, button, false);
-            } catch (RemoteException ex) {
-                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            if (remoteCall) {
+                try {
+                    remoteBoard.processClick(x, y, button, false);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-        
-        if ((!inGame) && (!host)) {
-            this.newGame();
-        }
-        int cCol = x / CELL_SIZE;
-        int cRow = y / CELL_SIZE;
 
-        boolean rep = false;
+            int cCol = x / CELL_SIZE;
+            int cRow = y / CELL_SIZE;
 
-        if ((x < cols * CELL_SIZE) && (y < rows * CELL_SIZE) && MineFrame.playingGame) {
+            boolean rep = false;
 
-            //Rightmouse button - set flag and update statusbar
-            if (button == MouseEvent.BUTTON3) {
+            if ((x < cols * CELL_SIZE) && (y < rows * CELL_SIZE) && MineFrame.playingGame) {
 
-                if (field[(cRow * cols) + cCol] > MINE_CELL) {
-                    rep = true;
+                //Rightmouse button - set flag and update statusbar
+                if (button == MouseEvent.BUTTON3) {
 
-                    if (field[(cRow * cols) + cCol] <= COVERED_MINE_CELL) {
-                        if (mines_left > 0) {
-                            field[(cRow * cols) + cCol] += MARK_FOR_CELL;
-                            mines_left--;
-                            statusbar.setText(mineStr + Integer.toString(mines_left));
+                    if (field[(cRow * cols) + cCol] > MINE_CELL) {
+                        rep = true;
+
+                        if (field[(cRow * cols) + cCol] <= COVERED_MINE_CELL) {
+                            if (mines_left > 0) {
+                                field[(cRow * cols) + cCol] += MARK_FOR_CELL;
+                                mines_left--;
+                                statusbar.setText(mineStr + Integer.toString(mines_left));
+                            } else {
+                                statusbar.setText("No marks left");
+                            }
                         } else {
-                            statusbar.setText("No marks left");
+                            field[(cRow * cols) + cCol] -= MARK_FOR_CELL;
+                            mines_left++;
+                            statusbar.setText(mineStr + Integer.toString(mines_left));
                         }
-                    } else {
-                        field[(cRow * cols) + cCol] -= MARK_FOR_CELL;
-                        mines_left++;
-                        statusbar.setText(mineStr + Integer.toString(mines_left));
+                    }
+
+                } else {
+                    //Nothing happens when we click on a marked cell
+                    if (field[(cRow * cols) + cCol] > COVERED_MINE_CELL) {
+                        return;
+                    }
+
+                    if ((field[(cRow * cols) + cCol] > MINE_CELL) && (field[(cRow * cols) + cCol] < MARKED_MINE_CELL)) {
+
+                        field[(cRow * cols) + cCol] -= COVER_FOR_CELL;
+                        rep = true;
+
+                        if (field[(cRow * cols) + cCol] == MINE_CELL) {
+                            inGame = false;
+                        }
+                        if (field[(cRow * cols) + cCol] == EMPTY_CELL) {
+                            find_empty_cells((cRow * cols) + cCol);
+                        }
                     }
                 }
 
-            } else {
-                //Nothing happens when we click on a marked cell
-                if (field[(cRow * cols) + cCol] > COVERED_MINE_CELL) {
-                    return;
+                if (rep) {
+                    repaint();
+                    pushFieldToUndoStack();
                 }
-
-                if ((field[(cRow * cols) + cCol] > MINE_CELL) && (field[(cRow * cols) + cCol] < MARKED_MINE_CELL)) {
-
-                    field[(cRow * cols) + cCol] -= COVER_FOR_CELL;
-                    rep = true;
-
-                    if (field[(cRow * cols) + cCol] == MINE_CELL) {
-                        inGame = false;
-                    }
-                    if (field[(cRow * cols) + cCol] == EMPTY_CELL) {
-                        find_empty_cells((cRow * cols) + cCol);
-                    }
-                }
-            }
-
-            if (rep) {
-                repaint();
-                pushFieldToUndoStack();
             }
         }
     }
