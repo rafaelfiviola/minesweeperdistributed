@@ -47,8 +47,10 @@ public class MineFrame {
     private static int height;
     private static int width;
 
-    private static boolean host, reinicia;
+    private static boolean host;
     private static String remoteIP, localIP;
+    
+    private javax.swing.JLabel nick;
 
     //Declare the menu bar and its items (GUI elements)
     private static String getService(String serverIp, int port) {
@@ -58,9 +60,7 @@ public class MineFrame {
     public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
 
         frame = new JFrame();//Create the frame for the GUI
-
-        this.reinicia = reinicia;
-
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
