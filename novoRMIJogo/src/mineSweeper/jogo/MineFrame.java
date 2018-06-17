@@ -47,7 +47,7 @@ public class MineFrame {
     private static int height;
     private static int width;
 
-    private static boolean host;
+    private static boolean host, reinicia;
     private static String remoteIP, localIP;
 
     //Declare the menu bar and its items (GUI elements)
@@ -55,10 +55,11 @@ public class MineFrame {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
 
- 
     public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
 
         frame = new JFrame();//Create the frame for the GUI
+
+        this.reinicia = reinicia;
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
         frame.setTitle("Minesweeper");//Title of the frame
@@ -85,8 +86,6 @@ public class MineFrame {
         startNewGame();
         frame.setVisible(true);//Show all components on the window
     }
-
-    
 
     //Method to start/restart the game when a game has been lost, restarted or loaded
     public static void startNewGame() throws NotBoundException, MalformedURLException, RemoteException {
@@ -121,19 +120,21 @@ public class MineFrame {
         frame.setLocation(x, y);
         frame.pack();
         if (host) {
-            Esperando e = new Esperando();
-            e.setVisible(true);
-            System.out.println("Board Conect:" + board.isConect());
+           
+                Esperando e = new Esperando();
+                e.setVisible(true);
+                System.out.println("Board Conect:" + board.isConect());
 
-            while (!(board.isConect())) { //enquanto não tem um cliente espera alguem conectar 
-                System.out.println(".");
-            }
+                while (!(board.isConect())) { //enquanto não tem um cliente espera alguem conectar 
+                    System.out.println(".");
+                }
 
-            System.out.println("Board Conect:" + board.isConect());
-            e.dispose();
+                System.out.println("Board Conect:" + board.isConect());
+                e.dispose();
 
-            //seta aqui o remoteIP com o ip que o cliente passou ao serviço quando chamou a função informa do host
-            remoteIP = board.getRemoteIP();
+                //seta aqui o remoteIP com o ip que o cliente passou ao serviço quando chamou a função informa do host
+                remoteIP = board.getRemoteIP();
+            
 
             try {
                 board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879)));
@@ -166,7 +167,7 @@ public class MineFrame {
     public static String getRemoteIP() {
         return remoteIP;
     }
-    
+
     //Mutator for the number of mines
     public static void setNoOfMines(int noOfMines) {
         MineFrame.noOfMines = noOfMines;
@@ -228,5 +229,4 @@ public class MineFrame {
         height = noOfRows * 15 + 20;
     }
 
-    
 }

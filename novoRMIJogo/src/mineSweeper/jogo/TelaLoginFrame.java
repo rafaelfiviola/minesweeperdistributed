@@ -109,9 +109,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
 
     private void btnEntrarJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarJogoMouseClicked
         // TODO add your handling code here:
-        nick = txtNick.getText();
-        new ListarServidores();
-        this.setVisible(false);
+        
     }//GEN-LAST:event_btnEntrarJogoMouseClicked
 
     private void btnCriarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarJogoActionPerformed
@@ -130,7 +128,9 @@ public class TelaLoginFrame extends javax.swing.JFrame {
 
     private void btnEntrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarJogoActionPerformed
         // TODO add your handling code here:
+        nick = txtNick.getText();
         new ListarServidores();
+        this.setVisible(false);
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
     public static void main(String[] args) {

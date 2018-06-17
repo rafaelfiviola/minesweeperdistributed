@@ -54,5 +54,7 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
         game.setConect(true);
         System.out.println("Setou Conect");
     }
+    
+
 
 }

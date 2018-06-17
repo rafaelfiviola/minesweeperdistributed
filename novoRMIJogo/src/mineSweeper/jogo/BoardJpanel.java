@@ -410,7 +410,7 @@ public class BoardJpanel extends JPanel {
         boolean rep = false;
 
         if (!inGame) {
-            new MineFrame(host, remoteIP);
+            new TelaLoginFrame();
         }
 
         if ((x < cols * CELL_SIZE) && (y < rows * CELL_SIZE) && MineFrame.playingGame) {
