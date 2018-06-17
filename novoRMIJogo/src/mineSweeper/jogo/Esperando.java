@@ -5,6 +5,9 @@
  */
 package mineSweeper.jogo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Van's Sexy Machine
@@ -16,6 +19,8 @@ public class Esperando extends javax.swing.JFrame {
      */
     public Esperando() {
         initComponents();
+        this.setVisible(false);
+        
     }
 
     /**

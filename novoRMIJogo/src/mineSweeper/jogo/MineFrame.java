@@ -49,7 +49,7 @@ public class MineFrame {
 
     private static boolean host;
     private static String remoteIP, localIP;
-
+    
     //Declare the menu bar and its items (GUI elements)
     private static String getService(String serverIp, int port) {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
@@ -61,9 +61,7 @@ public class MineFrame {
      * @throws MalformedURLException
      * @throws RemoteException
      */
-    public MineFrame() throws NotBoundException, MalformedURLException, RemoteException {
-        new MineFrame(null);
-    }
+ 
 
     /**
      * Esse construtor inicia o MineFrame em modo cliente, e necessita um ip;
@@ -159,6 +157,7 @@ public class MineFrame {
             System.out.println("Board Conect:" + board.isConect());
 
             while (!(board.isConect())) { //enquanto não tem um cliente espera alguem conectar 
+                System.out.println(".");
             }
 
             System.out.println("Board Conect:" + board.isConect());

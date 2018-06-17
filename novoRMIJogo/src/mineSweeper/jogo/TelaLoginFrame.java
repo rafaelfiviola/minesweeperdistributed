@@ -122,10 +122,14 @@ public class TelaLoginFrame extends javax.swing.JFrame {
 
     private void btnCriarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarJogoActionPerformed
         nick = txtNick.getText();
+        this.dispose();
         try {
-            // TODO add your handling code here:
             new MineFrame(null);
-        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
+        } catch (NotBoundException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
             Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCriarJogoActionPerformed
