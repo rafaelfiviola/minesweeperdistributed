@@ -17,4 +17,6 @@ public interface Board extends java.rmi.Remote {
     public void processClick(int x, int y, int button, boolean remoteCall) throws java.rmi.RemoteException;
 
     public void informa(String clientIP) throws java.rmi.RemoteException;
+
+    public void newGame() throws java.rmi.RemoteException;
 }

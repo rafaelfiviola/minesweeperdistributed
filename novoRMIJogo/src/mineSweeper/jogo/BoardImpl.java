@@ -34,7 +34,6 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
     public int[] getField() throws RemoteException {
         return game.getField();
     }
-    
 
     @Override
     public void processClick(int x, int y, int button, boolean remoteCall) throws RemoteException {
@@ -55,7 +54,10 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
         game.setConect(true);
         System.out.println("Setou Conect");
     }
-    
 
+    @Override
+    public void newGame() throws java.rmi.RemoteException {
+        game.newGame();
+    }
 
 }
