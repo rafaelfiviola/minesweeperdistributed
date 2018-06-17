@@ -13,7 +13,6 @@ public interface Board extends java.rmi.Remote {
 
     public int[] getField() throws java.rmi.RemoteException;
     
-//    public int[] setField() throws java.rmi.RemoteException;
 
     public void processClick(int x, int y, int button, boolean remoteCall) throws java.rmi.RemoteException;
 

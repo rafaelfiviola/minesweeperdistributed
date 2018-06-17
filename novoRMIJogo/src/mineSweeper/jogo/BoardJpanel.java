@@ -81,7 +81,7 @@ public class BoardJpanel extends JPanel {
         setDoubleBuffered(true);
 
         addMouseListener(new MinesAdapter());
-        newGame(false);
+        newGame();
     }
 
     // set solved (mutator/setter)
@@ -132,7 +132,7 @@ public class BoardJpanel extends JPanel {
     }
 
     // create a new game
-    public void newGame(boolean newgame) {
+    public void newGame() {
 
         Random random;
         int current_col;
@@ -240,17 +240,7 @@ public class BoardJpanel extends JPanel {
                     }
                 }
             }
-            if (newgame) {
-                try {
-                    processClick(0, 0, MouseEvent.BUTTON3, true);
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NotBoundException ex) {
-                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+           
         } else {
             try {
                 remoteBoard = (Board) Naming.lookup(getService(remoteIP, 7879)); //ip remoto           
@@ -265,7 +255,6 @@ public class BoardJpanel extends JPanel {
         }
         // save first undo to stack
         pushFieldToUndoStack();
-        this.repaint();
     }
 
     // search & uncover cell when there isn't a mine around it
@@ -409,8 +398,8 @@ public class BoardJpanel extends JPanel {
     }
 
     public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
-        if (!inGame) {
-            this.newGame(true);
+        if ((!inGame) && (host)) {
+            this.newGame();
         }
 
         if (remoteCall) {
@@ -419,6 +408,10 @@ public class BoardJpanel extends JPanel {
             } catch (RemoteException ex) {
                 Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        
+        if ((!inGame) && (!host)) {
+            this.newGame();
         }
         int cCol = x / CELL_SIZE;
         int cRow = y / CELL_SIZE;
