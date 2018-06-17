@@ -81,7 +81,7 @@ public class BoardJpanel extends JPanel {
         setDoubleBuffered(true);
 
         addMouseListener(new MinesAdapter());
-        newGame();
+        newGame(false);
     }
 
     // set solved (mutator/setter)
@@ -132,7 +132,7 @@ public class BoardJpanel extends JPanel {
     }
 
     // create a new game
-    public void newGame() {
+    public void newGame(boolean newgame) {
 
         Random random;
         int current_col;
@@ -240,15 +240,16 @@ public class BoardJpanel extends JPanel {
                     }
                 }
             }
-            
-            try {
-                processClick(0, 0, MouseEvent.BUTTON3, true);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RemoteException ex) {
-                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
-                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            if (newgame) {
+                try {
+                    processClick(0, 0, MouseEvent.BUTTON3, true);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex) {
+                    Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else {
             try {
@@ -409,9 +410,9 @@ public class BoardJpanel extends JPanel {
 
     public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
         if (!inGame) {
-            this.newGame();
+            this.newGame(true);
         }
-        
+
         if (remoteCall) {
             try {
                 remoteBoard.processClick(x, y, button, false);
@@ -423,8 +424,6 @@ public class BoardJpanel extends JPanel {
         int cRow = y / CELL_SIZE;
 
         boolean rep = false;
-
-        
 
         if ((x < cols * CELL_SIZE) && (y < rows * CELL_SIZE) && MineFrame.playingGame) {
 
