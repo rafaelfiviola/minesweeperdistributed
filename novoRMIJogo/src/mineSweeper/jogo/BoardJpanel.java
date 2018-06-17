@@ -241,6 +241,15 @@ public class BoardJpanel extends JPanel {
                 }
             }
             
+            try {
+                processClick(0, 0, MouseEvent.BUTTON3, true);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(BoardJpanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             try {
                 remoteBoard = (Board) Naming.lookup(getService(remoteIP, 7879)); //ip remoto           
@@ -400,7 +409,7 @@ public class BoardJpanel extends JPanel {
 
     public synchronized void processClick(int x, int y, int button, boolean remoteCall) throws NotBoundException, MalformedURLException, RemoteException {
         if (!inGame) {
-            this.newGame();            
+            this.newGame();
         }
         
         if (remoteCall) {
