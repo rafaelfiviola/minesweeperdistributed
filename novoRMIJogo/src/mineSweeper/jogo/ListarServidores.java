@@ -164,12 +164,13 @@ public class ListarServidores extends javax.swing.JFrame {
     private void selecionarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selecionarBtnMouseClicked
         //No caso de cliente o ip do servidor escolhido é passado 
         selectedServerString = ((ServerInfo) servCbx.getSelectedItem()).getIpAddressString();
+        this.setVisible(false);
         try {
-            new MineFrame(selectedServerString);
+            new MineFrame(false, selectedServerString);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.setVisible(false);
+        
     }//GEN-LAST:event_selecionarBtnMouseClicked
 
     private void updateLabels() {

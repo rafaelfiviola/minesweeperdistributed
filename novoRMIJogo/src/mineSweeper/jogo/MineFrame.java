@@ -49,30 +49,15 @@ public class MineFrame {
 
     private static boolean host;
     private static String remoteIP, localIP;
-    
+
     //Declare the menu bar and its items (GUI elements)
     private static String getService(String serverIp, int port) {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
 
-    /**
-     * Esse construtor inicia o MineFrame em modo servidor 
-     * @throws NotBoundException
-     * @throws MalformedURLException
-     * @throws RemoteException
-     */
  
+    public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
 
-    /**
-     * Esse construtor inicia o MineFrame em modo cliente, e necessita um ip;
-     * @param remoteIP
-     * @throws NotBoundException
-     * @throws MalformedURLException
-     * @throws RemoteException
-     */
-    public MineFrame(String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
-        host = remoteIP == null;
-        
         frame = new JFrame();//Create the frame for the GUI
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
@@ -89,9 +74,7 @@ public class MineFrame {
 
         frame.add(gamePanel);//Add gamePanel to the frame
         this.host = host;
-        if (!host) {
-            this.remoteIP = remoteIP;
-        }
+        this.remoteIP = remoteIP;
 
         //o servidor udp é iniciado para permitir o descobrimento do ip do servidor pelos clientes
         if (host) {
@@ -103,6 +86,8 @@ public class MineFrame {
         frame.setVisible(true);//Show all components on the window
     }
 
+    
+
     //Method to start/restart the game when a game has been lost, restarted or loaded
     public static void startNewGame() throws NotBoundException, MalformedURLException, RemoteException {
         gamePanel.removeAll();
@@ -110,22 +95,6 @@ public class MineFrame {
         redoStack.removeAllElements();
         gamePanel.add(statusbar, BorderLayout.SOUTH);
         BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host, remoteIP);
-//        JButton connButt = new JButton("Conectar");
-//        connButt.addActionListener((ae) -> {
-//            remoteIP tem que ser setado aqui para host == true
-//            try {
-//                board.setRemoteBoard((Board) Naming.lookup(getService(remoteIP, 7879))); //ip remoto
-//            } catch (NotBoundException ex) {
-//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (MalformedURLException ex) {
-//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (RemoteException ex) {
-//                Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        });
-//
-//        connButt.setVisible(host);
-//        gamePanel.add(connButt, BorderLayout.NORTH);
         Board teste = null;
         try {
             teste = new BoardImpl(board);
@@ -134,8 +103,8 @@ public class MineFrame {
         }
         Logger.getLogger(MineFrame.class.getName()).log(Level.INFO, "Launching Server");
 
-            Thread server = new Thread(new LaunchServer(7879, localIP, teste));
-            server.start();
+        Thread server = new Thread(new LaunchServer(7879, localIP, teste));
+        server.start();
 
         gamePanel.add(board, BorderLayout.CENTER);
 
@@ -186,6 +155,18 @@ public class MineFrame {
         return noOfMines;
     }
 
+    public static JLabel getStatusbar() {
+        return statusbar;
+    }
+
+    public static boolean isHost() {
+        return host;
+    }
+
+    public static String getRemoteIP() {
+        return remoteIP;
+    }
+    
     //Mutator for the number of mines
     public static void setNoOfMines(int noOfMines) {
         MineFrame.noOfMines = noOfMines;
@@ -247,4 +228,5 @@ public class MineFrame {
         height = noOfRows * 15 + 20;
     }
 
+    
 }

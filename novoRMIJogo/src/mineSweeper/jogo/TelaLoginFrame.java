@@ -104,13 +104,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
 
     private void btnCriarJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCriarJogoMouseClicked
         // TODO add your handling code here:
-        nick = txtNick.getText();
-        try {
-            new MineFrame(null); //inicia como servidor
-        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
-            Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.setVisible(false);
+       
     }//GEN-LAST:event_btnCriarJogoMouseClicked
 
     private void btnEntrarJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarJogoMouseClicked
@@ -124,7 +118,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         nick = txtNick.getText();
         this.dispose();
         try {
-            new MineFrame(null);
+            new MineFrame(true, null);
         } catch (NotBoundException ex) {
             Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
