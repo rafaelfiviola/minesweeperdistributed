@@ -49,12 +49,6 @@ public class ListarServidores extends javax.swing.JFrame {
 
         servCbx = new javax.swing.JComboBox<ServerInfo>();
         procurarBtn = new javax.swing.JButton();
-        nomeLbl = new javax.swing.JLabel();
-        nomeServLbl = new javax.swing.JLabel();
-        dificuldadeLbl = new javax.swing.JLabel();
-        dificuldadeServLbl = new javax.swing.JLabel();
-        numeroSrvLbl = new javax.swing.JLabel();
-        numeroServLbl = new javax.swing.JLabel();
         selecionarBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,18 +66,6 @@ public class ListarServidores extends javax.swing.JFrame {
             }
         });
 
-        nomeLbl.setText("Nome:");
-
-        nomeServLbl.setText("******");
-
-        dificuldadeLbl.setText("Dificuldade:");
-
-        dificuldadeServLbl.setText("******");
-
-        numeroSrvLbl.setText("Nº Jogadores");
-
-        numeroServLbl.setText("******");
-
         selecionarBtn.setText("Selecionar");
         selecionarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -97,24 +79,14 @@ public class ListarServidores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dificuldadeLbl)
-                            .addComponent(numeroSrvLbl)
-                            .addComponent(nomeLbl))
-                        .addGap(89, 89, 89)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nomeServLbl)
-                            .addComponent(numeroServLbl)
-                            .addComponent(dificuldadeServLbl)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(servCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(selecionarBtn)
-                            .addComponent(procurarBtn))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(servCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(procurarBtn)
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(selecionarBtn)
+                .addGap(144, 144, 144))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,21 +95,9 @@ public class ListarServidores extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(servCbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(procurarBtn))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeLbl)
-                    .addComponent(nomeServLbl))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dificuldadeLbl)
-                    .addComponent(dificuldadeServLbl))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numeroSrvLbl)
-                    .addComponent(numeroServLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(selecionarBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,7 +124,7 @@ public class ListarServidores extends javax.swing.JFrame {
     private void selecionarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selecionarBtnMouseClicked
         //No caso de cliente o ip do servidor escolhido é passado 
         selectedServerString = ((ServerInfo) servCbx.getSelectedItem()).getIpAddressString();
-        this.setVisible(false);
+        this.dispose();
         try {
             new MineFrame(false, selectedServerString);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
@@ -186,17 +146,8 @@ public class ListarServidores extends javax.swing.JFrame {
         servCbx.setSelectedIndex(0);
     }
 
-    public static void main(String[] args) {
-        ListarServidores window = new ListarServidores();
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel dificuldadeLbl;
-    private javax.swing.JLabel dificuldadeServLbl;
-    private javax.swing.JLabel nomeLbl;
-    private javax.swing.JLabel nomeServLbl;
-    private javax.swing.JLabel numeroServLbl;
-    private javax.swing.JLabel numeroSrvLbl;
     private javax.swing.JButton procurarBtn;
     private javax.swing.JButton selecionarBtn;
     private javax.swing.JComboBox servCbx;

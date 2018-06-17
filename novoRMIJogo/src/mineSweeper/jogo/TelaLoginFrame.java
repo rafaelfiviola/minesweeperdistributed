@@ -6,7 +6,6 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mineSweeper.jogo.MineFrame;
-import mineSweeper.jogo.MineFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -129,8 +128,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
     private void btnEntrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarJogoActionPerformed
         // TODO add your handling code here:
         nick = txtNick.getText();
-        new ListarServidores();
-        this.setVisible(false);
+        new ListarServidores();        
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
     public static void main(String[] args) {

@@ -25,30 +25,15 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dificuldadeLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="numeroSrvLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="nomeLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="nomeServLbl" min="-2" max="-2" attributes="0"/>
-                          <Component id="numeroServLbl" min="-2" max="-2" attributes="0"/>
-                          <Component id="dificuldadeServLbl" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="servCbx" min="-2" pref="226" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="selecionarBtn" min="-2" max="-2" attributes="0"/>
-                          <Component id="procurarBtn" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
+              <Component id="servCbx" min="-2" pref="226" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="procurarBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="selecionarBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,24 +45,9 @@
                   <Component id="servCbx" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="procurarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="nomeLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="nomeServLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="dificuldadeLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="dificuldadeServLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="numeroSrvLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="numeroServLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="selecionarBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -104,36 +74,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="procurarBtnActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="nomeLbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Nome:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="nomeServLbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="******"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="dificuldadeLbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Dificuldade:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="dificuldadeServLbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="******"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="numeroSrvLbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="N&#xba; Jogadores"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="numeroServLbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="******"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="selecionarBtn">
       <Properties>
