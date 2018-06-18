@@ -29,12 +29,14 @@ public class ListarServidores extends javax.swing.JFrame {
     //Essas duas variáveis foram criadas para receber o conteúdo do servidor udp (que é uma string e nesse momento é apenas o ip do servidor),
     //depois é possível passar mais informações pela string e criar esse objeto serverInfo para cada servidor
     private String selectedServerString;
+    private String nome;
 
     /**
      * Creates new form ListarServidores
      */
-    public ListarServidores() {
+    public ListarServidores(String nome) {
         initComponents();
+        this.nome = nome;
         this.setVisible(true);
     }
 
@@ -126,7 +128,7 @@ public class ListarServidores extends javax.swing.JFrame {
         selectedServerString = ((ServerInfo) servCbx.getSelectedItem()).getIpAddressString();
         this.dispose();
         try {
-            new MineFrame(false, selectedServerString);
+            new MineFrame(false, selectedServerString, nome);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ListarServidores.class.getName()).log(Level.SEVERE, null, ex);
         }

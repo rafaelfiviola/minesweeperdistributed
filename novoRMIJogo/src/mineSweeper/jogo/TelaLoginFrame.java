@@ -132,7 +132,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         nick = txtNick.getText();
         System.out.println("The nick is " + nick);
         this.dispose();
-        new ListarServidores();
+        new ListarServidores(nick);
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
     public static void main(String[] args) {

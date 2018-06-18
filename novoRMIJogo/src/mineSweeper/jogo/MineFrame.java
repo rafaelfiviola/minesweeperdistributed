@@ -67,8 +67,9 @@ public class MineFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
-        nick = "Jogadores: " + name + " e ";
+        nick = name;
         statusbar = new JLabel("");//Set the passed-in status bar
+        nomes = new JLabel("");
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board
         try {
             localIP = InetAddress.getLocalHost().getHostAddress();
@@ -155,7 +156,7 @@ public class MineFrame {
             }
         }
         
-        nick = nick + ((Board) (Naming.lookup(getService(remoteIP, 7879)))).getNome();
+        nick = "Jogadores: " + nick + " e " + ((Board) (Naming.lookup(getService(remoteIP, 7879)))).getNome();
         nomes.setText(nick);
     }
 
