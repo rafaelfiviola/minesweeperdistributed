@@ -50,14 +50,16 @@ public class MineFrame {
     private static boolean host;
     private static String remoteIP, localIP;
     
-    private javax.swing.JLabel nick;
-
+    private String nick;
+    
     //Declare the menu bar and its items (GUI elements)
     private static String getService(String serverIp, int port) {
         return "rmi://" + serverIp + ":" + port + "/RemoteGameService";
     }
-
     public MineFrame(boolean host, String remoteIP) throws NotBoundException, MalformedURLException, RemoteException {
+            new MineFrame(host, remoteIP, null);
+    }
+    public MineFrame(boolean host, String remoteIP, String name) throws NotBoundException, MalformedURLException, RemoteException {
 
         frame = new JFrame();//Create the frame for the GUI
         
@@ -80,7 +82,8 @@ public class MineFrame {
         //o servidor udp é iniciado para permitir o descobrimento do ip do servidor pelos clientes
         if (host) {
             System.out.println("Iniciando Servidor UDP");
-            ServidorUdp.go();
+            ServidorUdp su = new ServidorUdp();
+            su.go(name);
         }
 
         startNewGame();
@@ -126,7 +129,6 @@ public class MineFrame {
                 System.out.println("Board Conect:" + board.isConect());
 
                 while (!(board.isConect())) { //enquanto não tem um cliente espera alguem conectar 
-                    System.out.println(".");
                 }
 
                 System.out.println("Board Conect:" + board.isConect());

@@ -37,6 +37,17 @@ public class ServerInfo implements Serializable {
         }
     }
 
+    public ServerInfo(String name) {
+        try {
+            this.name = name;
+            this.ipAddress = InetAddress.getLocalHost();
+            this.ipAddressString = InetAddress.getLocalHost().getHostAddress();
+            this.port = 50000;
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ServerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public ServerInfo(ServerInfo s) {
         this.name = s.name;
         this.difficulty = s.difficulty;
@@ -70,7 +81,7 @@ public class ServerInfo implements Serializable {
     }
 
     public Integer getNumberOfPlayers() {
-        
+
         return numberOfPlayers == null ? 1 : numberOfPlayers;
     }
 

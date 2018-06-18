@@ -103,19 +103,21 @@ public class TelaLoginFrame extends javax.swing.JFrame {
 
     private void btnCriarJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCriarJogoMouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_btnCriarJogoMouseClicked
 
     private void btnEntrarJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarJogoMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnEntrarJogoMouseClicked
 
     private void btnCriarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarJogoActionPerformed
         nick = txtNick.getText();
         this.dispose();
+        System.out.println("The nick is " + nick);
+
         try {
-            new MineFrame(true, null);
+            MineFrame mf = new MineFrame(true, null, nick);
         } catch (NotBoundException ex) {
             Logger.getLogger(TelaLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
@@ -128,7 +130,8 @@ public class TelaLoginFrame extends javax.swing.JFrame {
     private void btnEntrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarJogoActionPerformed
         // TODO add your handling code here:
         nick = txtNick.getText();
-        new ListarServidores();        
+        System.out.println("The nick is " + nick);
+        new ListarServidores();
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 
     public static void main(String[] args) {
