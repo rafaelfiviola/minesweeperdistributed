@@ -59,5 +59,10 @@ public class BoardImpl extends java.rmi.server.UnicastRemoteObject implements Bo
     public void newGame() throws java.rmi.RemoteException {
         game.newGame();
     }
+    
+    @Override
+    public String getNome() throws java.rmi.RemoteException {
+        return game.getNome();
+    }
 
 }

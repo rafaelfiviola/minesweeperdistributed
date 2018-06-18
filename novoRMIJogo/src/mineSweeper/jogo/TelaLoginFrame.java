@@ -131,6 +131,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         nick = txtNick.getText();
         System.out.println("The nick is " + nick);
+        this.dispose();
         new ListarServidores();
     }//GEN-LAST:event_btnEntrarJogoActionPerformed
 

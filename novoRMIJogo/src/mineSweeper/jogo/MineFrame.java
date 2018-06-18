@@ -27,6 +27,7 @@ public class MineFrame {
     private static JFrame frame;
     private static JPanel gamePanel;
     private static JLabel statusbar;
+    private static JLabel nomes;
 
     //Generic int[] stacks
     public static Stack<int[]> undoStack = new Stack<int[]>();
@@ -50,7 +51,7 @@ public class MineFrame {
     private static boolean host;
     private static String remoteIP, localIP;
     
-    private String nick;
+    private static String nick;
     
     //Declare the menu bar and its items (GUI elements)
     private static String getService(String serverIp, int port) {
@@ -66,7 +67,7 @@ public class MineFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
-
+        nick = "Jogadores: " + name + " e ";
         statusbar = new JLabel("");//Set the passed-in status bar
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board
         try {
@@ -96,7 +97,9 @@ public class MineFrame {
         undoStack.removeAllElements();
         redoStack.removeAllElements();
         gamePanel.add(statusbar, BorderLayout.SOUTH);
+        gamePanel.add(nomes, BorderLayout.NORTH);
         BoardJpanel board = new BoardJpanel(statusbar, noOfMines, noOfRows, noOfCols, host, remoteIP);
+        board.setNome(nick);
         Board teste = null;
         try {
             teste = new BoardImpl(board);
@@ -129,6 +132,7 @@ public class MineFrame {
                 System.out.println("Board Conect:" + board.isConect());
 
                 while (!(board.isConect())) { //enquanto não tem um cliente espera alguem conectar 
+                    System.out.println("");
                 }
 
                 System.out.println("Board Conect:" + board.isConect());
@@ -150,6 +154,9 @@ public class MineFrame {
                 Logger.getLogger(MineFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        nick = nick + ((Board) (Naming.lookup(getService(remoteIP, 7879)))).getNome();
+        nomes.setText(nick);
     }
 
     //Accessors and mutators

@@ -19,4 +19,6 @@ public interface Board extends java.rmi.Remote {
     public void informa(String clientIP) throws java.rmi.RemoteException;
 
     public void newGame() throws java.rmi.RemoteException;
+    
+    public String getNome() throws java.rmi.RemoteException;
 }

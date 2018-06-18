@@ -54,6 +54,7 @@ public class BoardJpanel extends JPanel {
     private Board remoteBoard;
 
     private String remoteIP;
+    private String nome;
 
     public void setRemoteBoard(Board remoteBoard) {
         this.remoteBoard = remoteBoard;
@@ -131,6 +132,15 @@ public class BoardJpanel extends JPanel {
         this.remoteIP = remoteIP;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    
     // create a new game
     public void newGame() {
 
@@ -158,7 +168,7 @@ public class BoardJpanel extends JPanel {
 
         //Set the text for the status bar
         statusbar.setText(mineStr + Integer.toString(mines_left));
-
+        
         //Reset i to 0
         if (host) {
             i = 0;
