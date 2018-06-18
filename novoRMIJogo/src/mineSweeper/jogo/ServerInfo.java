@@ -39,7 +39,11 @@ public class ServerInfo implements Serializable {
 
     public ServerInfo(String name) {
         try {
-            this.name = name;
+            if (!(name.isEmpty())){
+                this.name = name;
+            }else{
+                this.name = "Anônimo";
+            }
             this.ipAddress = InetAddress.getLocalHost();
             this.ipAddressString = InetAddress.getLocalHost().getHostAddress();
             this.port = 50000;

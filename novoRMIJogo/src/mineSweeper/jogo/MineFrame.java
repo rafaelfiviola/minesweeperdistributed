@@ -67,7 +67,11 @@ public class MineFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Have the application exit when closed
         frame.setTitle("Minesweeper");//Title of the frame
         frame.setResizable(false);//Have the frame re-sizable useful for custom games
-        nick = name;
+        if (!(name.isEmpty())){
+                nick = name;
+            }else{
+                nick = "Anônimo";
+            }
         statusbar = new JLabel("");//Set the passed-in status bar
         nomes = new JLabel("");
         gamePanel = new JPanel(new BorderLayout());//New panel that contains the board

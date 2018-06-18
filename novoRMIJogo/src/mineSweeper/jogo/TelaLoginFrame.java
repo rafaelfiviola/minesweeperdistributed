@@ -24,6 +24,7 @@ public class TelaLoginFrame extends javax.swing.JFrame {
      * Creates new form TelaLoginFrame
      */
     public TelaLoginFrame() {
+        this.setTitle("Login");
         initComponents();
         this.setVisible(true);
     }

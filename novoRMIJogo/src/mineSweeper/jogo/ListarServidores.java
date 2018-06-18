@@ -36,6 +36,7 @@ public class ListarServidores extends javax.swing.JFrame {
      */
     public ListarServidores(String nome) {
         initComponents();
+        this.setTitle("Escolha o outro jogador");
         this.nome = nome;
         this.setVisible(true);
     }
