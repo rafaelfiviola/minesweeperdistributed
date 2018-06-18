@@ -29,7 +29,6 @@ public class ServerInfo implements Serializable {
      */
     public ServerInfo() {
         try {
-            this.name = "default";
             this.ipAddress = InetAddress.getLocalHost();
             this.ipAddressString = InetAddress.getLocalHost().getHostAddress();
             this.port = 50000;
@@ -63,7 +62,7 @@ public class ServerInfo implements Serializable {
     }
 
     public String getDifficulty() {
-        return difficulty;
+        return difficulty == null ? "N/A" : difficulty;
     }
 
     public void setDifficulty(String difficulty) {
@@ -71,7 +70,8 @@ public class ServerInfo implements Serializable {
     }
 
     public Integer getNumberOfPlayers() {
-        return numberOfPlayers;
+        
+        return numberOfPlayers == null ? 1 : numberOfPlayers;
     }
 
     public void setNumberOfPlayers(Integer numberOfPlayers) {
