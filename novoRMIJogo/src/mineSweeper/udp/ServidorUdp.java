@@ -29,11 +29,12 @@ public class ServidorUdp implements Runnable {
     private DatagramPacket packetUdp;
     private int serverPort;
     private static final int BUFFERSIZE = 1024;
-    private static final int MAXTRIES = 5;
     private byte[] buffer;
+    private String name;
 
-    public static void go() {
-        Thread threadServidorUdp = new Thread(new ServidorUdp());
+    public void go(String name) {
+        Thread threadServidorUdp = new Thread(this);
+        this.name = name;
         threadServidorUdp.start();
     }
 
@@ -44,7 +45,7 @@ public class ServidorUdp implements Runnable {
         try {
             socketUdp = new DatagramSocket(serverPort);
             buffer = new byte[BUFFERSIZE];
-            ServerInfo si = new ServerInfo();
+            ServerInfo si = new ServerInfo(name);
 
             //O loop espera uma requisição e a responde passando o ip do servidor
             for (;;) {
@@ -74,6 +75,5 @@ public class ServidorUdp implements Runnable {
         buffer = baos.toByteArray();
         packetUdp.setData(buffer);
         socketUdp.send(packetUdp);
-
     }
 }
