@@ -240,7 +240,7 @@ public class MineFrame {
 
     public static void calcDimentions() {
         width = noOfCols * 15;
-        height = noOfRows * 15 + 20;
+        height = noOfRows * 15 + 30;
     }
 
 }
